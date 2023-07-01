@@ -1,11 +1,10 @@
 nav {
-  background-color: rgb(244, 244, 246);
-  height: 60px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
 }
@@ -26,11 +25,12 @@ nav ul {
 }
 
 nav ul li img {
-  height: 40px;
-  width: 55px;
+  height: 60px;
+  width: 65px;
   margin-right: 20px;
   object-fit: contain;
-  margin-top: 10px;
+
+  margin-top: 7px;
 }
 
 nav ul li a {
@@ -39,9 +39,11 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: grey;
+  color: rgb(109, 106, 106);
   font-weight: bold;
-  background-color: white;
+  background-color: rgba(238, 210, 152, 0.5);
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .nav-right {

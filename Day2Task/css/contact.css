@@ -7,6 +7,14 @@ input {
   border-style: none;
 }
 
+.title {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  margin: 100px 400px;
+  border-radius: 20px;
+  padding-bottom: 30px;
+}
+
 h1 {
   margin-top: 20px;
   font-weight: bold;
