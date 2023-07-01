@@ -6,6 +6,8 @@
 }
 
 body {
+  /* background-color: rgb(231, 233, 241); */
+  background-image: url(https://e0.pxfuel.com/wallpapers/60/562/desktop-wallpaper-pastel-background-landscape-page-6-pastel-landscape-art.jpg);
   background: url(/images/bg1.jpeg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
