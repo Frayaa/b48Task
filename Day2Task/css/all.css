@@ -6,8 +6,7 @@
 }
 
 body {
-  /* background-color: rgb(231, 233, 241); */
-  background-image: url(/Day2Task/images/bg1.jpeg);
+  background: url(/images/bg1.jpeg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
