@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact</title>
+    <link rel="stylesheet" href="css/contact.css" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/all.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Rubik+Distressed&family=Rubik+Iso&family=Silkscreen:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="nav-left">
+      <ul>
+        <li>
+          <img src="images/panda2.png" />
+        </li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">My Project</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="contact.html"> <button type="submit">Contact me</button></a>
+      </div>
+    </nav>
+    <div class="title">
+      <h1 style="font-family: 'Poppins', sans-serif">GET IN TOUCH</h1>
+      <div class="contact-container">
+        <form class="form-container">
+          <div>
+            <label> Name </label>
+            <input id="input-name" />
+          </div>
+          <div>
+            <label>Email</label>
+
+            <input id="input-email" />
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input id="input-phone" />
+          </div>
+          <div>
+            <label>Subject</label>
+            <select id="input-subject">
+              <option value="">Please Choose Subject</option>
+              <option value="FrontendDeveleoper">Frontend Developer</option>
+              <option value="BackendDeveloper">Backend Developer</option>
+              <option value="FullstackDeveloper">Fullstack Developer</option>
+            </select>
+          </div>
+          <div>
+            <label>Your Message</label>
+            <input id="input-message" style="height: 60px" />
+          </div>
+
+          <button type="submit" onclick="submitData(event)">Submit</button>
+        </form>
+      </div>
+    </div>
+    <script src="contact.js"></script>
+  </body>
+</html>
