@@ -36,7 +36,7 @@
       <div class="blog">
         <h1 style="font-family: 'Poppins', sans-serif">ADD MY PROJECT</h1>
         <div class="blog-container">
-          <form class="form-container">
+          <form class="form-container" id="form">
             <div>
               <label> Project Name </label>
               <input id="input-project" />
@@ -64,48 +64,62 @@
             </div>
             <div class="input-techno">
               <label>Technologies</label>
-              <div class="checkbox">
               <table>
                 <tr>
-                  <td>
-                    <label>
-                      <input type="checkbox" id="nodejs" checked="checked" />
-                      Node Js
-                    </label>
-                  </td>
-
+                  <div class="checkbox">
+                    <td>
+                      <label>
+                        <input
+                          type="checkbox"
+                          id="nodejs"
+                          class="multi-input"
+                        />
+                        Node Js
+                      </label>
+                    </td>
                   </div>
                   <div class="checkbox">
-                  <td>
-                    <label>
-                      <input type="checkbox" id="reactjs" />
-                      React Js
-                    </label>
-                  </td>
+                    <td>
+                      <label>
+                        <input
+                          type="checkbox"
+                          id="reactjs"
+                          class="multi-input"
+                        />
+                        React Js
+                      </label>
+                    </td>
+                  </div>
                 </tr>
 
-                </div>
-
-                <div class="checkbox">
                 <tr>
-                  <td>
-                    <label>
-                      <input type="checkbox" id="nextjs" />
-                      Next Js
-                    </label>
-                  </td>
+                  <div class="checkbox">
+                    <td>
+                      <label>
+                        <input
+                          type="checkbox"
+                          id="javascript"
+                          class="multi-input"
+                        />
+                        Javascript
+                      </label>
+                    </td>
                   </div>
 
                   <div class="checkbox">
-                  <td>
-                    <label>
-                      <input type="checkbox" id="typescript" />
-                      TypeScript
-                    </label>
-                  </td>
+                    <td>
+                      <label>
+                        <input
+                          type="checkbox"
+                          id="typescript"
+                          class="multi-input"
+                        />
+                        TypeScript
+                      </label>
+                    </td>
+                  </div>
                 </tr>
               </table>
-              </div>
             </div>
 
             <!-- <div class="upload-image">
@@ -122,153 +136,160 @@
                 <label for="input-image">
                   <p>
                     Attach File
-                    <i class="bx bxs-file-image"></i>
+                    <i class="bx bxs-cloud-upload"></i>
                   </p>
                 </label>
                 <input type="file" id="input-image" hidden />
               </div>
             </div>
-
-            <button type="submit" onclick="submitData(event)">Submit</button>
+            <div>
+              <button type="submit" onclick="addBlog(event)">Submit</button>
+            </div>
           </form>
         </div>
         <!-- <hr class="line" /> -->
-        <div id="contents" class="blog-list"></div>
       </div>
 
-
-      <h1>MY PROJECT</h1>
-      <div class="container-project">
-        <div class="container-card">
-          <div class="image-project">
-            <img src="images/project.jpeg" />
-          </div>
-          <div class="title-project">
-            <a href="blog-detail.html"><h3>Mobile App</h3></a>
-            <p>Durasi: 3 bulan</p>
-          </div>
-          <div class="content">
-            <p>
-              App that used for student, it was deployed and can downloaded on
-              playstore. Happy Download
-            </p>
-          </div>
-          <div class="icon-project">
-            <i class="bx bxl-play-store"></i>
-            <i class="bx bxl-android"></i>
-            <i class="bx bxl-java"></i>
-          </div>
-          <div class="button-project">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-
-        <div class="container-card">
-          <div class="image-project">
-            <img src="images/project.jpeg" />
-          </div>
-          <div class="title-project">
-            <a href="blog-detail.html"><h3>Mobile App</h3></a>
-            <p>Durasi: 3 bulan</p>
-          </div>
-          <div class="content">
-            <p>
-              App that used for student, it was deployed and can downloaded on
-              playstore. Happy Download
-            </p>
-          </div>
-          <div class="icon-project">
-            <i class="bx bxl-play-store"></i>
-            <i class="bx bxl-android"></i>
-            <i class="bx bxl-java"></i>
-          </div>
-          <div class="button-project">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-
-        <div class="container-card">
-          <div class="image-project">
-            <img src="images/project.jpeg" />
-          </div>
-          <div class="title-project">
-            <a href="blog-detail.html"><h3>Mobile App</h3></a>
-            <p>Durasi: 3 bulan</p>
-          </div>
-          <div class="content">
-            <p>
-              App that used for student, it was deployed and can downloaded on
-              playstore. Happy Download
-            </p>
-          </div>
-          <div class="icon-project">
-            <i class="bx bxl-play-store"></i>
-            <i class="bx bxl-android"></i>
-            <i class="bx bxl-java"></i>
+      <!-- Blog Detail -->
+      <div>
+        <h1>MY PROJECT</h1>
+        <div class="container-project">
+          <div id="contents" class="blog-list"></div>
+          <!-- <div> -->
+          <div class="container-card">
+            <div class="image-project">
+              <img src="images/project.jpeg" />
+            </div>
+            <div class="title-project">
+              <a href="blog-detail.html"><h3>Mobile App</h3></a>
+              <p>Durasi: 3 bulan</p>
+            </div>
+            <div class="content">
+              <p>
+                App that used for student, it was deployed and can downloaded on
+                playstore. Happy Download
+              </p>
+            </div>
+            <div class="icon-project">
+              <i class="bx bxl-nodejs"></i>
+              <i class="bx bxl-react"></i>
+              <i class="bx bxl-typescript"></i>
+            </div>
+            <div class="button-project">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+            <!-- </div> -->
           </div>
 
-          <div class="button-project">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-
-        <div class="container-card">
-          <div class="image-project">
-            <img src="images/project.jpeg" />
-          </div>
-          <div class="title-project">
-            <a href="blog-detail.html"><h3>Mobile App</h3></a>
-            <p>Durasi: 3 bulan</p>
-          </div>
-          <div class="content">
-            <p>
-              App that used for student, it was deployed and can downloaded on
-              playstore. Happy Download
-            </p>
-          </div>
-          <div class="icon-project">
-            <i class="bx bxl-play-store"></i>
-            <i class="bx bxl-android"></i>
-            <i class="bx bxl-java"></i>
-          </div>
-
-          <div class="button-project">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        </div>
-
-        <div class="container-card">
-          <div class="image-project">
-            <img src="images/project.jpeg" />
-          </div>
-          <div class="title-project">
-            <a href="blog-detail.html"><h3>Mobile App</h3></a>
-            <p>Durasi: 3 bulan</p>
-          </div>
-          <div class="content">
-            <p>
-              App that used for student, it was deployed and can downloaded on
-              playstore. Happy Download
-            </p>
-          </div>
-          <div class="icon-project">
-            <i class="bx bxl-play-store"></i>
-            <i class="bx bxl-android"></i>
-            <i class="bx bxl-java"></i>
+          <div class="container-card">
+            <div class="image-project">
+              <img src="images/project.jpeg" />
+            </div>
+            <div class="title-project">
+              <a href="blog-detail.html"><h3>Mobile App</h3></a>
+              <p>Durasi: 3 bulan</p>
+            </div>
+            <div class="content">
+              <p>
+                App that used for student, it was deployed and can downloaded on
+                playstore. Happy Download
+              </p>
+            </div>
+            <div class="icon-project">
+              <i class="bx bxl-nodejs"></i>
+              <i class="bx bxl-react"></i>
+              <i class="bx bxl-typescript"></i>
+            </div>
+            <div class="button-project">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
           </div>
 
-          <div class="button-project">
-            <button>Edit</button>
-            <button>Delete</button>
+          <div class="container-card">
+            <div class="image-project">
+              <img src="images/project.jpeg" />
+            </div>
+            <div class="title-project">
+              <a href="blog-detail.html"><h3>Mobile App</h3></a>
+              <p>Durasi: 3 bulan</p>
+            </div>
+            <div class="content">
+              <p>
+                App that used for student, it was deployed and can downloaded on
+                playstore. Happy Download
+              </p>
+            </div>
+            <div class="icon-project">
+              <i class="bx bxl-nodejs"></i>
+              <i class="bx bxl-react"></i>
+              <i class="bx bxl-typescript"></i>
+            </div>
+
+            <div class="button-project">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+          </div>
+
+          <div class="container-card">
+            <div class="image-project">
+              <img src="images/project.jpeg" />
+            </div>
+            <div class="title-project">
+              <a href="blog-detail.html"><h3>Mobile App</h3></a>
+              <p>Durasi: 3 bulan</p>
+            </div>
+            <div class="content">
+              <p>
+                App that used for student, it was deployed and can downloaded on
+                playstore. Happy Download
+              </p>
+            </div>
+            <div class="icon-project">
+              <i class="bx bxl-nodejs"></i>
+              <i class="bx bxl-react"></i>
+              <i class="bx bxl-typescript"></i>
+            </div>
+
+            <div class="button-project">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+          </div>
+
+          <div class="container-card">
+            <div class="image-project">
+              <img src="images/project.jpeg" />
+            </div>
+            <div class="title-project">
+              <a href="blog-detail.html"><h3>Mobile App</h3></a>
+              <p>Durasi: 3 bulan</p>
+            </div>
+            <div class="content">
+              <p>
+                App that used for student, it was deployed and can downloaded on
+                playstore. Happy Download
+              </p>
+            </div>
+            <div class="icon-project">
+              <i class="bx bxl-nodejs"></i>
+              <i class="bx bxl-react"></i>
+              <i class="bx bxl-typescript"></i>
+            </div>
+
+            <div class="button-project">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="blog.js"></script>
+    <script src="blog.js">
+      document.getElementById("form").reset()
+    </script>
   </body>
 </html>
