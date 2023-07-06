@@ -37,7 +37,7 @@ const addBlog = (event) => {
   let typescript = document.getElementById("typescript").checked ? typeIcon : ""
 
   image = URL.createObjectURL(image[0])
-  console.log(image)
+
 
   let multiInput = document.querySelectorAll(".multi-input:checked")
   if (multiInput.length === 0) {

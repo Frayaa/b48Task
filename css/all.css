@@ -6,8 +6,7 @@
 }
 
 body {
-  /* background: url(/images/bg1.jpeg); */
-  background-image: url(/Day3Task/images/bg1.jpeg);
+  background-image: url(/images/bg1.jpeg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
