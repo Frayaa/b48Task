@@ -122,24 +122,14 @@
               </table>
             </div>
 
-            <!-- <div class="upload-image">
-            <label for="upload-image">Upload Image </label>
-            <div class="input-image">
-              <p>Attach File</p>
-              <i class="bx bxs-file-image"></i>
-              <input type="file" id="input-image" hidden />
-            </div>
-          </div> -->
             <div>
               <label>Upload Image</label>
               <div class="input-image">
                 <label for="input-image">
-                  <p>
-                    Attach File
-                    <i class="bx bxs-cloud-upload"></i>
-                  </p>
+                  <input type="file" id="input-image" />
+                  <i class="bx bxs-cloud-upload"></i>
                 </label>
-                <input type="file" id="input-image" hidden />
+                <img id="input-image-prev" />
               </div>
             </div>
             <div>
@@ -154,7 +144,6 @@
         <h1>MY PROJECT</h1>
         <div class="container-project">
           <div id="contents" class="blog-list"></div>
-          <!-- <div> -->
           <div class="container-card">
             <div class="image-project">
               <img src="images/project.jpeg" />
@@ -178,7 +167,6 @@
               <button>Edit</button>
               <button>Delete</button>
             </div>
-            <!-- </div> -->
           </div>
 
           <div class="container-card">
@@ -288,7 +276,6 @@
     </div>
 
     <script src="blog.js">
-      document.getElementById("form").reset()
     </script>
   </body>
 </html>

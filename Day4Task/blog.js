@@ -2,6 +2,7 @@ let dataBlog = []
 
 const addBlog = (event) => {
   event.preventDefault()
+ 
 
   let project = document.getElementById("input-project").value
   let startDate = document.getElementById("input-start").value
@@ -10,7 +11,6 @@ const addBlog = (event) => {
   let description = document.getElementById("input-description").value
   let image = document.getElementById("input-image").files
   let images = document.getElementById("input-image").value
-  let form = document
 
   if (project === "") {
     return alert("Please input Your Name Project")

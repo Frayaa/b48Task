@@ -61,19 +61,23 @@ h1 {
   border-style: none;
 }
 
+#input-image {
+  margin-top: -80px;
+  padding: 6px;
+  font-size: 15px;
+  margin-left: -6px;
+  width: 100%;
+}
+
 .input-image label {
   align-items: center;
   margin-top: 2px;
 }
 
-.input-image p {
-  margin: -2px 2px;
-  font-size: 16px;
-}
 .input-image i {
   font-size: 40px;
-  margin-left: 160px;
-  margin-top: -8px;
+  margin-left: 240px;
+  margin-top: -40px;
   position: absolute;
 }
 
@@ -109,7 +113,6 @@ h1 {
 .image-project {
   width: 300px;
   height: 260px;
-
 }
 
 .image-project img {
