@@ -1,0 +1,95 @@
+.container {
+  margin: 100px 60px;
+  width: auto;
+  padding: 50px;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.container h1 {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+
+.container p {
+  text-align: justify;
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.container .container-word {
+  margin-right: 40px;
+}
+
+.container button {
+  font-family: "Poppins";
+  padding-inline: 30px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+}
+.contact {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.contact .download {
+  width: 190px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact .download i {
+  font-size: 25px;
+  color: black;
+  margin: 10px;
+}
+
+.contact a button {
+  height: 30px;
+}
+.social {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: left;
+  margin-top: 40px;
+}
+
+.images {
+  width: auto;
+  margin: auto;
+  border-radius: 5px;
+  margin-top: 50px;
+  font-family: "Poppins";
+  float: right;
+  margin-left: 40px;
+  box-shadow: 0px 0px 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.images h2 {
+  font-size: 16px;
+  text-align: center;
+  color: black;
+  margin: 10px;
+}
+.images p {
+  text-align: center;
+  margin: 10px;
+}
+
+#foto {
+  height: 300px;
+  width: 240px;
+}
