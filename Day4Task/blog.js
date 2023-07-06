@@ -11,20 +11,19 @@ const addBlog = (event) => {
   let image = document.getElementById("input-image").files
   let images = document.getElementById("input-image").value
   let form = document
-  
 
   if (project === "") {
     return alert("Please input Your Name Project")
   } else if (startDate === "") {
-    return alert("Please fill the date")
+    return alert("Please Fill The Start Date")
   } else if (endDate === "") {
-    return alert("please fill the date")
+    return alert("lease Fill The End Date")
   } else if (description === "") {
-    return alert("pleasae fill the description")
+    return alert("Pleasae Fill The Description")
   } else if (input.length === 0) {
-    return alert("please choose the technologies")
+    return alert("Please Choose The Technologies")
   } else if (images === "") {
-    return alert("please choose the image")
+    return alert("Please Choose The Image")
   }
 
   const nodeJsIcon = '<i class="bx bxl-nodejs"></i>'
@@ -42,14 +41,14 @@ const addBlog = (event) => {
 
   let multiInput = document.querySelectorAll(".multi-input:checked")
   if (multiInput.length === 0) {
-    return alert("Select at least one technology used.")
+    return alert("Please Select At least One Technologies")
   }
 
   let start = new Date(startDate)
   let end = new Date(endDate)
 
   if (start > end) {
-    return alert("Your Fill End Date after Start Date")
+    return alert("You Fill End Date Before Start Date")
   }
 
   let difference = end.getTime() - start.getTime()
@@ -60,16 +59,16 @@ const addBlog = (event) => {
   let duration = ""
 
   if (days > 0) {
-    duration = days + " hari"
+    duration = days + " Hari"
   }
   if (weeks > 0) {
-    duration = weeks + " minggu"
+    duration = weeks + " Minggu"
   }
   if (months > 0) {
-    duration = months + " bulan"
+    duration = months + " Bulan"
   }
   if (years > 0) {
-    duration = years + " tahun"
+    duration = years + " Tahun"
   }
 
   let blog = {
@@ -119,7 +118,3 @@ const renderBlog = () => {
    </div>`
   }
 }
-
-const form = () => {
-  document.getElementById('form').reset()
-} 

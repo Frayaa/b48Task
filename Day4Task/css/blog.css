@@ -61,15 +61,9 @@ h1 {
   border-style: none;
 }
 
-
-
 .input-image label {
-  /* display: flex;
-  flex-direction: column; */
-  /* border: 2px solid black; */
   align-items: center;
   margin-top: 2px;
-
 }
 
 .input-image p {
@@ -110,11 +104,17 @@ h1 {
   border-radius: 10px;
   box-shadow: 0px 0px 5px;
   border-style: none;
-  /* background-color: blue; */
+}
+
+.image-project {
+  width: 300px;
+  height: 260px;
+
 }
 
 .image-project img {
   width: 260px;
+  height: 220px;
   margin: 10px 20px;
   border-radius: 10px;
   margin-top: 20px;
@@ -123,6 +123,17 @@ h1 {
 .title-project {
   font-size: 18px;
   margin: 10px 20px;
+ 
+}
+
+.title-project a {
+  text-decoration: none;
+}
+
+.title-project a h3 {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
 }
 
 .content p {

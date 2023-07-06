@@ -9,6 +9,11 @@ body {
   padding-bottom: 30px;
 }
 
+.blog-detail h1 {
+  font-weight: 800;
+  font-size: 50px;
+}
+
 .left-header img {
   width: 700px;
   height: 500px;
