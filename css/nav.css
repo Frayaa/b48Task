@@ -7,7 +7,9 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgba(158, 148, 148, 0.1);
+  backdrop-filter: blur(10px);
+  /* background-color: rgba(158, 148, 148, 0.1); */
+  
 }
 
 nav ul li {

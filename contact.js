@@ -20,11 +20,11 @@ const submitData = (e) => {
   } else if (email === "") {
     return alert("Please Fill The Email")
   } else if (phone === "") {
-    alert("Please Fill The Phone Number")
+    return alert("Please Fill The Phone Number")
   } else if (subject === "") {
-    alert("Please Fill The Subject")
+    return alert("Please Fill The Subject")
   } else if (message === "") {
-    alert("Please Fill The Message")
+    return alert("Please Fill The Message")
   }
 
   const emailReceive = "inifryeyay@gmail.com"
@@ -32,4 +32,6 @@ const submitData = (e) => {
   let a = document.createElement("a")
   a.href = `mailto:${emailReceive}?subject=${subject}&body=Halo nama saya ${name}, \n${message}, silahkan kontak : ${phone}`
   a.click()
+  return console.log(name + "adalah saya")
 }
+
