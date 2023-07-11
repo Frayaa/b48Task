@@ -9,7 +9,6 @@ nav {
   width: 100%;
   backdrop-filter: blur(10px);
   /* background-color: rgba(158, 148, 148, 0.1); */
-  
 }
 
 nav ul li {
@@ -64,4 +63,71 @@ nav ul li a:hover {
   font-weight: 500;
   font-size: 15px;
   border-style: none;
+}
+
+.hamburger-nav {
+  display: none;
+  flex-direction: column;
+  font-size: 18px;
+margin-top: 40px;
+  width: 100%;
+  position: fixed;
+  /* margin-left: 120px; */
+ 
+  background-color: rgb(247, 194, 203);
+  height: 20%;
+}
+
+.hamburger-nav a {
+  display: none;
+}
+
+/* .nav-active {
+  background-color: orangered;
+} */
+
+/* .hamburger-btn a {
+  text-align: center;
+  text-decoration: none;
+
+} */
+
+@media only screen and (max-width: 600px) {
+  .item {
+    display: none;
+  }
+
+  .hamburger-nav a {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px auto 5px;
+    text-align: center;
+    /* text-align: center; */
+    text-decoration: none;
+    color: white;
+    /* background-color: rgb(249, 199, 208); */
+    /* border: 2px solid white; */
+    padding: 2px 0;
+    float: right;
+  }
+
+  a:hover {
+    background: none;
+    color: rgb(185, 23, 203);
+  }
+
+   
+  }
+
+
+  /* #menu {
+    display: none;
+  } */
+
+@media only screen and (min-width: 600px) {
+  #hamburger-btn {
+    display: none;
+    cursor: pointer;
+  }
 }

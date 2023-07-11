@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/images/panda2.png">
+    <link rel="icon" href="/images/panda2.png" />
     <title>My Project</title>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/aa1f7944a1.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="stylesheet" href="css/all.css" />
     <link rel="stylesheet" href="css/blog.css" />
@@ -23,15 +27,28 @@
         <li>
           <img src="images/panda2.png" />
         </li>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="blog.html">My Project</a></li>
+        <li class="item"><a href="index.html">Home</a></li>
+        <li class="item"><a href="blog.html">My Project</a></li>
       </ul>
-      <div class="nav-right">
+      <div class="nav-right item">
         <a href="contact.html">
           <button>Contact me</button>
         </a>
       </div>
+
+      <div class="nav-right" id="hamburger-btn">
+        <button onclick="openNav()">
+          <i class="fa-solid fa-bars" id="menu"></i>
+          <!-- <i class="fa-regular fa-xmark" id="close"></i> -->
+        </button>
+      </div>
     </nav>
+
+    <div class="hamburger-nav" id="hamburger-nav">
+      <a href="index.html" class="nav-active">Home</a>
+      <a href="blog.html">My Project</a>
+      <a href="contact.html">Contact</a>
+    </div>
 
     <div>
       <div class="blog">
@@ -95,6 +112,7 @@
 
                 <tr>
                   <div class="checkbox">
+                    
                     <td>
                       <label>
                         <input
@@ -276,7 +294,7 @@
       </div>
     </div>
 
-    <script src="js/blog.js">
-    </script>
+    <script src="js/blog.js"></script>
+    <script src="js/nav.js"></script>
   </body>
 </html>

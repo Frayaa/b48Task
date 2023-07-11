@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="css/contact.css" />
     <link rel="stylesheet" href="css/nav.css" />
     <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Rubik+Distressed&family=Rubik+Iso&family=Silkscreen:wght@700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/aa1f7944a1.js"
+      crossorigin="anonymous"
+    ></script>
+    
   </head>
   <body>
     <nav>
@@ -19,15 +25,29 @@
         <li>
           <img src="images/panda2.png" />
         </li>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="blog.html">My Project</a></li>
+        <li class="item"><a href="index.html">Home</a></li>
+        <li class="item"><a href="blog.html">My Project</a></li>
       </ul>
-      <div class="nav-right">
+      <div class="nav-right item">
         <a href="contact.html">
           <button>Contact me</button>
         </a>
       </div>
+
+      <div class="nav-right" id="hamburger-btn">
+        <button onclick="openNav()">
+          <i class="fa-solid fa-bars" id="menu"></i>
+          <!-- <i class="fa-regular fa-xmark" id="close"></i> -->
+        </button>
+      </div>
     </nav>
+
+    <div class="hamburger-nav" id="hamburger-nav">
+      <a href="index.html" class="nav-active">Home</a>
+      <a href="blog.html">My Project</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
     <div class="title">
       <h1 style="font-family: 'Poppins', sans-serif">GET IN TOUCH</h1>
       <div class="contact-container">
@@ -64,5 +84,6 @@
       </div>
     </div>
     <script src="js/contact.js"></script>
+    <script src="js/nav.js"></script>
   </body>
 </html>

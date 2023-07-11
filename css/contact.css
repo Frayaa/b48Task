@@ -37,6 +37,7 @@ h1 {
 .form-container div label {
   font-size: medium;
 }
+
 .form-container select {
   background-color: white;
   padding: 6px;
@@ -68,4 +69,34 @@ h1 {
   flex-direction: row;
   justify-content: center;
   margin-top: 20px;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .title {
+    margin: 100px 40px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .form-container div label {
+    font-size: 16px;
+    margin: 0 25px;
+  }
+
+  input {
+    margin: 0 25px;
+  }
+
+  .form-container select {
+    margin: 0 25px;
+    width: 84%;
+  }
+
+  .form-container button {
+    margin: 0 100px;
+  }
 }

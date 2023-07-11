@@ -62,7 +62,7 @@ h1 {
 }
 
 #input-image {
-  margin-top: -80px;
+  margin-top: -10px;
   padding: 6px;
   font-size: 15px;
   margin-left: -6px;
@@ -176,4 +176,28 @@ h1 {
   margin: 0 4px;
   margin-bottom: 20px;
   background-color: rgb(152, 92, 213);
+}
+
+
+@media only screen and (max-width: 600px) {
+  .blog {
+    margin: 100px 40px;
+    padding-bottom: 10px;
+  }
+
+  .input-techno td {
+    /* background-color: red; */
+    padding-left: -10px;
+  }
+  .multi-input {
+    margin-left: -2px;
+    background-color: blue;
+  }
+
+  #input-end {
+    background-color: red;
+    
+  }
+
+ 
 }

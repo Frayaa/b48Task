@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/images/panda2.png">
+    <link rel="icon" href="/images/panda2.png" />
     <title>Home</title>
     <script
       src="https://kit.fontawesome.com/aa1f7944a1.js"
@@ -18,7 +18,6 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="css/nav.css" />
@@ -34,15 +33,28 @@
         <li>
           <img src="images/panda2.png" />
         </li>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="blog.html">My Project</a></li>
+        <li class="item"><a href="index.html">Home</a></li>
+        <li class="item"><a href="blog.html">My Project</a></li>
       </ul>
-      <div class="nav-right">
+      <div class="nav-right item">
         <a href="contact.html">
           <button>Contact me</button>
         </a>
       </div>
+
+      <div class="nav-right" id="hamburger-btn">
+        <button onclick="openNav()">
+          <i class="fa-solid fa-bars" id="menu"></i>
+          <!-- <i class="fa-regular fa-xmark" id="close"></i> -->
+        </button>
+      </div>
     </nav>
+
+    <div class="hamburger-nav" id="hamburger-nav">
+      <a href="index.html" class="nav-active">Home</a>
+      <a href="blog.html">My Project</a>
+      <a href="contact.html">Contact</a>
+    </div>
 
     <div class="container">
       <div class="container-word">
@@ -98,5 +110,6 @@
         <p>FullStack Developer</p>
       </div>
     </div>
+    <script src="js/nav.js"></script>
   </body>
 </html>

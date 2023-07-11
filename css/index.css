@@ -93,3 +93,38 @@
   height: 300px;
   width: 240px;
 }
+
+@media only screen and (max-width: 600px) {
+  .container {
+    flex-direction: column-reverse;
+    width: 84%;
+    margin:40px 0;
+    align-items: center;
+    padding-right: 12px;
+    
+  }
+
+  .container h1 {
+    text-align: center;
+  }
+
+  .container p {
+    font-size: 16px;
+  }
+
+  .social {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact .download {
+    width: 160px;
+  }
+
+  .images {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 20px;
+  }
+}

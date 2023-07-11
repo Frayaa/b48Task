@@ -66,3 +66,20 @@ body {
   font-size: 18px;
   text-align: justify;
 }
+
+@media only screen and (max-width: 600px) {
+  .header-detail {
+    flex-direction: column;
+  }
+
+  .left-header img {
+    width: 80%;
+    height: 80%;
+    margin: 0 10%;
+    
+  }
+
+  .blog-detail h1 {
+    text-align: center;
+  }
+}
