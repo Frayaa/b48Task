@@ -178,26 +178,99 @@ h1 {
   background-color: rgb(152, 92, 213);
 }
 
-
 @media only screen and (max-width: 600px) {
-  .blog {
-    margin: 100px 40px;
-    padding-bottom: 10px;
+  .form-container {
+    padding: 20px;
   }
 
   .input-techno td {
-    /* background-color: red; */
     padding-left: -10px;
   }
   .multi-input {
     margin-left: -2px;
-    background-color: blue;
   }
 
   #input-end {
-    background-color: red;
-    
+    margin-left: 10px;
+    width: 95px;
   }
 
- 
+  #input-start {
+    width: 95px;
+    margin-right: 10px;
+  }
+
+  .input-image label {
+    width: 80%;
+    padding: 2px;
+  }
+
+  #input-image {
+    width: 125%;
+    margin-left: -33px;
+  }
+
+  .upload-image {
+    width: 82%;
+    margin-left: 26px;
+    padding: 5px;
+  }
+
+  #upload-img {
+    margin: 1px 2px;
+  }
+
+  .input-image i {
+    display: none;
+  }
+
+  .input-techno td {
+    width: 5px;
+  }
+
+  .input-techno {
+    margin: 0 25px;
+  }
+
+  #tech {
+    margin: 0 2px;
+  }
+
+  .multi-input {
+    margin: 1px 0px;
+  }
+
+  #check {
+    margin-left: 0px;
+    width: 20px;
+    margin: 0 0;
+  }
+
+  #h1-project {
+    margin-top: -40px;
+  }
+
+  .container-project {
+    margin-top: -20px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #h1-project {
+    margin-top: -40px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .blog {
+    margin: 100px 80px;
+  }
+
+  body {
+    background-size: 100% 74%;
+  }
+
+  #h1-project {
+    margin-top: -40px;
+  }
 }

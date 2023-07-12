@@ -71,11 +71,11 @@ h1 {
   margin-top: 20px;
 }
 
-
-
 @media only screen and (max-width: 600px) {
   .title {
     margin: 100px 40px;
+    padding: 5px;
+    height: 98%;
   }
 
   h1 {
@@ -85,6 +85,10 @@ h1 {
   .form-container div label {
     font-size: 16px;
     margin: 0 25px;
+  }
+
+  .form-container {
+    margin-top: -18px;
   }
 
   input {
@@ -98,5 +102,29 @@ h1 {
 
   .form-container button {
     margin: 0 100px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .title {
+    margin: 75px 80px;
+    width: 80%;
+    margin-left: 30px;
+  }
+
+  .form-container {
+    margin-top: -30px;
+  }
+}
+
+@media only screen and (min-width: 400px) {
+  .title {
+    margin: 80px 50px;
+    width: 80%;
+    margin-left: 35px;
+  }
+
+  .form-container {
+    margin-top: -30px;
   }
 }

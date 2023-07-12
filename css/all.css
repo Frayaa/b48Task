@@ -16,9 +16,11 @@ body {
 @media only screen and (max-width: 400px) {
   body {
     background-size: 100% 100%;
-    /* background-image: url(/images/bag4.jpeg); */
-    /* background-repeat: repeat-y; */
-
   }
 }
+
+
+
+
+
 

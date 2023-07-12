@@ -96,9 +96,9 @@
 
 @media only screen and (max-width: 600px) {
   .container {
-    flex-direction: column-reverse;
+    flex-direction: column;
     width: 84%;
-    margin:40px 0;
+    margin:100px 0;
     align-items: center;
     padding-right: 12px;
     
