@@ -1,56 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
-* {
-  text-decoration: none;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  margin: 0;
-}
-
 .container {
-  padding: 50px 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 2 em;
 }
 
-.testimoni {
+.container h1 {
+  text-align: center;
+}
+
+.testimonial {
   display: flex;
-  flex-wrap: wrap;
+  /* grid-template-columns: auto auto auto; */
   justify-content: center;
-  margin-top: 30px;
+  align-items: center;
+  gap: 40px;
+}
+
+.card-testimoni {
+  width: 22em;
+  height: 18em;
+  box-shadow: 0px 2px 8px 0px rgba(111, 111, 111, 0.2);
+  padding: 1em;
+  background-color: white
+}
+
+.card-testimoni img {
   width: 100%;
-}
-
-.testimoni {
-  width: 25%;
-  margin: 0px 15px 30px 15px;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.testimoni img {
   height: 200px;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .quote {
   font-size: 16px;
   font-style: italic;
-  line-height: 1.5;
   margin-bottom: 20px;
+  text-align: right;
 }
 
 .author {
   font-weight: bold;
   text-align: right;
-}
-
-.profile-testimoni {
-  width: 100%;
 }
 
 @media only screen and (max-width: 900px) {
@@ -59,8 +48,18 @@ body {
   }
 }
 
-@media only screen and (max-width: 700px) {
-  .testimoni {
-    width: 100%;
+@media only screen and (max-width: 400px) {
+  .testimonial {
+    flex-direction: column;
   }
+
+  .card-testimoni {
+    width: 75%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    
+  }
+
 }

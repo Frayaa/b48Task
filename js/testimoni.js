@@ -1,18 +1,18 @@
 class Testimoni {
-  #quote = ""
-  #image = ""
+  quote = ""
+  image = ""
 
   constructor(quote, image) {
-    this.#quote = quote
-    this.#image = image
+    this.quote = quote
+    this.image = image
   }
 
   get Quote() {
-    return this.#quote
+    return this.quote
   }
 
   get Image() {
-    return this.#image
+    return this.image
   }
 
   get User() {
@@ -21,38 +21,38 @@ class Testimoni {
 
   get testimoniHTML() {
     return `
-         <div class="testimoni">
+        <div class="card-testimoni">
             <img src="${this.image}" class="profile-testimonial" />
             <p class="quote">"${this.quote}"</p>
             <p class="author">- ${this.user}</p>
         </div>
-        `
+    `
   }
 }
 
 class UserTestimoni extends Testimoni {
-  #user = ""
+  user = ""
 
   constructor(user, quote, image) {
     super(quote, image)
-    this.#user = user
+    this.user = user
   }
 
   get User() {
-    return this.#user
+    return this.user
   }
 }
 
 class CompanyTestimoni extends Testimoni {
-  #company = ""
+  company = ""
 
   constructor(company, quote, image) {
     super(quote, image)
-    this.#company = company
+    this.company = company
   }
 
   get User() {
-    return "company: " + this.#company
+    return "company: " + this.company
   }
 }
 
