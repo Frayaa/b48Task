@@ -13,6 +13,7 @@ input {
   margin: 100px 400px;
   border-radius: 20px;
   padding-bottom: 30px;
+  
 }
 
 h1 {
@@ -27,6 +28,7 @@ h1 {
   flex-direction: column;
   width: 300px;
   gap: 20px;
+  
 }
 
 .form-container div {
@@ -37,7 +39,6 @@ h1 {
 .form-container div label {
   font-size: medium;
 }
-
 .form-container select {
   background-color: white;
   padding: 6px;
@@ -70,6 +71,7 @@ h1 {
   justify-content: center;
   margin-top: 20px;
 }
+
 
 @media only screen and (max-width: 600px) {
   .title {
@@ -109,7 +111,7 @@ h1 {
   .title {
     margin: 75px 80px;
     width: 80%;
-    margin-left: 30px;
+    margin-left: 35px;
   }
 
   .form-container {
@@ -117,11 +119,36 @@ h1 {
   }
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (max-width: 350px) {
   .title {
     margin: 80px 50px;
-    width: 80%;
-    margin-left: 35px;
+    width: 85%;
+    margin-left: 18.5px;
+    height: 120%;
+   
+  }
+
+  .form-container {
+    margin-top: -30px;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .title {
+    margin: 120px 130px;
+    width: 60%;
+    height: 70%;
+  }
+
+  .form-container {
+    margin-top: -30px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .title {
+    margin: 120px 142px;
+    width: 60%;
+    height: 62%;
   }
 
   .form-container {
