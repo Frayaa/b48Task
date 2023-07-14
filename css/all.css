@@ -13,11 +13,6 @@ body {
   height: 87.8vh;
 }
 
-@media only screen and (max-width: 400px) {
-  body {
-    background-size: 100% 100%;
-  }
-}
 
 
 
