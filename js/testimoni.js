@@ -83,7 +83,7 @@ const testimoniData = [
     quote: "NOT Bad",
     image:
       "https://images.unsplash.com/photo-1688396068145-4bec246f615c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-    rating: 2,
+    rating: 4,
   },
 ]
 
@@ -94,7 +94,8 @@ const allTestimonial = () => {
     testimoniHTML += `<div class="card-testimoni">
                         <img src="${card.image}" class="profile-testimonial" />
                         <p class="quote">"${card.quote}"</p>
-                        <p class="author">- ${card.user}</p>
+                        <p class="author">by ${card.user}</p>
+                        <p class="ratings"><i class="fa-solid fa-star"></i> ${card.rating}</p>
                       </div>`
   })
   document.getElementById("testimonial").innerHTML = testimoniHTML
@@ -117,6 +118,7 @@ const stars = (rating) => {
                         <img src="${card.image}" class="profile-testimonial" />
                         <p class="quote">"${card.quote}"</p>
                         <p class="author">- ${card.user}</p>
+                        <p class="ratings">- ${card.rating}</p>
                       </div>`
     })
   }

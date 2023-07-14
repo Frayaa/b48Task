@@ -179,8 +179,8 @@ h1 {
 }
 
 @media only screen and (max-width: 600px) {
-  .form-container {
-    padding: 20px;
+  .blog {
+     padding: 0 0px;
   }
 
   .input-techno td {
@@ -257,7 +257,7 @@ h1 {
 
 @media only screen and (max-width: 800px) {
   #h1-project {
-    margin-top: -40px;
+    margin-top: 20px;
   }
 }
 
@@ -271,6 +271,6 @@ h1 {
   }
 
   #h1-project {
-    margin-top: -40px;
+    margin-top: 40px;
   }
 }
