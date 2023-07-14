@@ -110,14 +110,14 @@ const stars = (rating) => {
   })
 
   if (testimoniFilter.length === 0) {
-    filterTestimoniHTML += `Data Not Found`
+    filterTestimoniHTML += `<h2>Data Not Found</h2>`
   } else {
     testimoniFilter.forEach((card) => {
       filterTestimoniHTML += `<div class="card-testimoni">
-    <img src="${card.image}" class="profile-testimonial" />
-    <p class="quote">"${card.quote}"</p>
-    <p class="author">- ${card.user}</p>
-  </div>`
+                        <img src="${card.image}" class="profile-testimonial" />
+                        <p class="quote">"${card.quote}"</p>
+                        <p class="author">- ${card.user}</p>
+                      </div>`
     })
   }
   document.getElementById("testimonial").innerHTML = filterTestimoniHTML
