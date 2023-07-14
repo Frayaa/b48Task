@@ -118,7 +118,7 @@ const stars = (rating) => {
                         <img src="${card.image}" class="profile-testimonial" />
                         <p class="quote">"${card.quote}"</p>
                         <p class="author">- ${card.user}</p>
-                        <p class="ratings">- ${card.rating}</p>
+                        <p class="ratings"><i class="fa-solid fa-star"></i> ${card.rating}</p>
                       </div>`
     })
   }
