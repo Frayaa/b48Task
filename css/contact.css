@@ -144,11 +144,23 @@ h1 {
     margin-top: -30px;
   }
 }
+
 @media only screen and (min-width: 800px) {
   .title {
     margin: 120px 142px;
     width: 60%;
     height: 62%;
+  }
+
+  .form-container {
+    margin-top: -30px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .title {
+    margin: 120px 240px;
+    width: 60%;
+    height: 86%;
   }
 
   .form-container {
