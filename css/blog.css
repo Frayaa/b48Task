@@ -1,276 +1,90 @@
-input {
-  background-color: white;
-  padding: 6px;
-  border-radius: 5px;
-  height: 25px;
-  box-shadow: 0px 2px 3px grey;
-  border-style: none;
-}
-
-.blog {
+#project {
+  margin-top: 6rem !important;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px 20px;
-  margin: 100px 400px;
-  border-radius: 20px;
-  padding-bottom: 30px;
+  border-radius: 15px;
+  height: 92%;
+  width: 80%;
 }
 
-h1 {
-  margin-top: 20px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-}
-
-.form-container {
-  width: 300px;
-  gap: 20px;
-}
-
-.form-container div label {
-  font-size: medium;
-}
-
-.form-container button {
-  margin-top: 10px;
-  font-family: "Poppins";
-  padding-inline: 15px;
-  height: 30px;
-  border-radius: 20px;
-  background-color: black;
-  color: white;
-  font-weight: 500;
-  font-size: 15px;
-  border-style: none;
-  width: 100px;
-  margin-left: 200px;
-}
-
-.blog-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.blog-container form .input-image {
-  background-color: white;
-  padding: 6px;
-  border-radius: 5px;
-  height: 25px;
-  box-shadow: 0px 2px 3px grey;
-  border-style: none;
-}
-
-#input-image {
-  margin-top: -10px;
-  padding: 6px;
-  font-size: 15px;
-  margin-left: -6px;
-  width: 100%;
-}
-
-.input-image label {
-  align-items: center;
-  margin-top: 2px;
-}
-
-.input-image i {
-  font-size: 40px;
-  margin-left: 240px;
-  margin-top: -40px;
-  position: absolute;
-}
-
-.multi-input {
-  width: 20px;
-  height: 20px;
-}
-
-.container-project {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 5px;
-  justify-content: center;
-}
-
-.blog-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.container-project h1 {
-  margin-top: -40px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.container-card {
-  background-color: rgb(254, 250, 254);
-  width: 300px;
-  height: 530px;
-  margin: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px;
-  border-style: none;
-}
-
-.image-project {
-  width: 300px;
-  height: 260px;
-}
-
-.image-project img {
-  width: 260px;
-  height: 220px;
-  margin: 10px 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-}
-
-.title-project {
-  font-size: 18px;
-  margin: 10px 20px;
-}
-
-.title-project a {
-  text-decoration: none;
-}
-
-.title-project a h3 {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.content p {
-  font-size: 16px;
-  margin: 10px 20px;
-  text-align: justify;
-  height: 80px;
+.card-text {
+  height: 100px;
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
+#images {
+  width: 260px;
+  height: 220px;
+  margin: 10px 12px;
+  border-radius: 10px;
+}
+
+.btn-blue {
+  margin-top: 10px;
+  font-family: "Poppins";
+  padding-inline: 15px;
+  height: 30px;
+  border-radius: 20px;
+  background: rgb(182, 86, 160);
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  border-style: none;
+  width: 122px;
+}
+
 .icon-project {
-  margin: 10px 20px;
   font-size: 30px;
 }
 
-.button-project {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#check {
+  font-size: 16px;
 }
 
-.button-project button {
-  font-size: 15px;
-  background-color: black;
-  width: 130px;
-  color: white;
-  border-radius: 5px;
-  border-style: none;
-  margin: 0 4px;
-  margin-bottom: 20px;
-  background-color: rgb(152, 92, 213);
+body {
+  height: 100vh;
 }
 
-@media only screen and (max-width: 600px) {
-  .blog {
-     padding: 0 0px;
+@media only screen and (min-width: 700px) {
+  #project {
+    height: 96%;
   }
-
-  .input-techno td {
-    padding-left: -10px;
-  }
-  .multi-input {
-    margin-left: -2px;
-  }
-
-  #input-end {
-    margin-left: 10px;
-    width: 95px;
-  }
-
-  #input-start {
-    width: 95px;
-    margin-right: 10px;
-  }
-
-  .input-image label {
-    width: 80%;
-    padding: 2px;
-  }
-
-  #input-image {
-    width: 125%;
-    margin-left: -33px;
-  }
-
-  .upload-image {
-    width: 82%;
-    margin-left: 26px;
-    padding: 5px;
-  }
-
-  #upload-img {
-    margin: 1px 2px;
-  }
-
-  .input-image i {
-    display: none;
-  }
-
-  .input-techno td {
-    width: 5px;
-  }
-
-  .input-techno {
-    margin: 0 25px;
-  }
-
-  #tech {
-    margin: 0 2px;
-  }
-
-  .multi-input {
-    margin: 1px 0px;
-  }
-
-  #check {
-    margin-left: 0px;
-    width: 20px;
-    margin: 0 0;
-  }
-
-  #h1-project {
-    margin-top: -40px;
-  }
-
-  .container-project {
-    margin-top: -20px;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  #h1-project {
-    margin-top: 20px;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .blog {
-    margin: 100px 80px;
-  }
-
   body {
-    background-size: 100% 74%;
+    height: 74vh;
   }
+}
+@media only screen and (min-width: 800px) {
+  #project {
+    height: 96%;
+  }
+  body {
+    height:60vh;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  #project {
+    height: 96%;
+  }
+  body {
+    height:90vh;
+  }
+}
 
-  #h1-project {
-    margin-top: 40px;
+@media only screen and (min-width: 320px) and (max-width: 760px) {
+  #project {
+    height: 98%;
+  }
+  body {
+    height: 96vh;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  #project {
+    height: 146vh;
+  }
+  body {
+    height: 150vh;
   }
 }

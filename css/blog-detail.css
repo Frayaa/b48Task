@@ -2,84 +2,22 @@ body {
   background: linear-gradient(45deg, #ecd19f, #afa6f4, #efc1cc, #f3cbb5);
   height: max-content;
 }
-.blog-detail {
-  padding: 20px 0px;
-  margin: 80px 10px;
-  border-radius: 20px;
-  padding-bottom: 30px;
+
+#blog-detail {
+  margin-top: 8rem;
 }
 
-.blog-detail h1 {
-  font-weight: 800;
-  font-size: 50px;
+#image {
+  width: 500px;
+  height: 400px;
+  margin: 10px 0px;
+  object-fit: cover;
 }
 
-.left-header img {
-  width: 700px;
-  height: 500px;
+p {
+  font-size: 20px;
 }
 
-.right-header {
-  margin-right: 200px;
-  width: 250px;
-}
-.header-detail {
-  margin: 0 20px;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.duration i {
-  margin-right: 10px;
-  font-size: 26px;
-  margin-top: 8px;
-}
-
-.duration p {
-  font-size: 16px;
-}
-
-.technologi {
-  margin-top: 30px;
-}
-
-.technologi i {
-  margin-right: 5px;
-  font-size: 26px;
-  margin-top: 8px;
-}
-
-.icon {
-  display: flex;
-  justify-content: space-between;
-}
-
-.paragraph {
-  margin-top: 20px;
-  padding: 20px 60px;
-}
-
-.paragraph p {
-  font-size: 18px;
-  text-align: justify;
-}
-
-@media only screen and (max-width: 600px) {
-  .header-detail {
-    flex-direction: column;
-  }
-
-  .left-header img {
-    width: 80%;
-    height: 80%;
-    margin: 0 10%;
-    
-  }
-
-  .blog-detail h1 {
-    text-align: center;
-  }
+i {
+  font-size: 25px;
 }

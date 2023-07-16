@@ -36,11 +36,11 @@ function allTestimonial() {
   let testimoniHTML = ""
 
   testimoniData.forEach((card) => {
-    testimoniHTML += `<div class="card-testimoni">
-                          <img src="${card.image}" class="profile-testimonial" />
-                          <p class="quote">"${card.quote}"</p>
-                          <p class="author">by ${card.user}</p>
-                          <p class="ratings"><i class="fa-solid fa-star"></i> ${card.rating}</p>
+    testimoniHTML += `<div class="card" style="width: 18rem">
+                          <img src="${card.image}" class="image-rounded" id="profile-img" />
+                          <p class="quote text-end px-3">"${card.quote}"</p>
+                          <p class="author text-end px-3">by ${card.user}</p>
+                          <p class="ratings text-end px-3"><i class="fa-solid fa-star"></i> ${card.rating}</p>
                         </div>`
   })
   document.getElementById("testimonial").innerHTML = testimoniHTML
@@ -57,11 +57,11 @@ const stars = (rating) => {
     filterTestimoniHTML += `<h2>Data Not Found</h2>`
   } else {
     testimoniFilter.forEach((card) => {
-      filterTestimoniHTML += `<div class="card-testimoni">
-                          <img src="${card.image}" class="profile-testimonial" />
-                          <p class="quote">"${card.quote}"</p>
-                          <p class="author">- ${card.user}</p>
-                          <p class="ratings"><i class="fa-solid fa-star"></i> ${card.rating}</p>
+      filterTestimoniHTML += `<div class="card" style="width: 18rem">
+                          <img src="${card.image}" class="image-rounded" id="profile-img" />
+                          <p class="quote text-end px-3">"${card.quote}"</p>
+                          <p class="author text-end px-3">- ${card.user}</p>
+                          <p class="ratings text-end px-3"><i class="fa-solid fa-star"></i> ${card.rating}</p>
                         </div>`
     })
   }
