@@ -13,7 +13,6 @@ input {
   margin: 100px 400px;
   border-radius: 20px;
   padding-bottom: 30px;
-  
 }
 
 h1 {
@@ -28,7 +27,6 @@ h1 {
   flex-direction: column;
   width: 300px;
   gap: 20px;
-  
 }
 
 .form-container div {
@@ -71,7 +69,6 @@ h1 {
   justify-content: center;
   margin-top: 20px;
 }
-
 
 @media only screen and (max-width: 600px) {
   .title {
@@ -125,7 +122,6 @@ h1 {
     width: 85%;
     margin-left: 18.5px;
     height: 120%;
-   
   }
 
   .form-container {

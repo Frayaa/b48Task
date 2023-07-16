@@ -179,6 +179,9 @@ h1 {
 }
 
 @media only screen and (max-width: 600px) {
+  body{
+    height: 100vh;
+  }
   .blog {
      padding: 0 0px;
   }
@@ -274,3 +277,5 @@ h1 {
     margin-top: 40px;
   }
 }
+
+
