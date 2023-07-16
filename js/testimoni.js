@@ -79,5 +79,4 @@ let testimoniHTML = ""
 for (let i = 0; i < testimoniData.length; i++) {
   testimoniHTML += testimoniData[i].testimoniHTML
 }
-// console.log(testimoniHTML)
 document.getElementById("testimonial").innerHTML = testimoniHTML
