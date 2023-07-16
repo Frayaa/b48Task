@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/images/panda2.png" />
+    <title>Testimoni</title>
+
+    <script
+      src="https://kit.fontawesome.com/aa1f7944a1.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/all.css" />
+    <link rel="stylesheet" href="css/contact.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/testimoni.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <img src="images/panda2.png" />
+        </li>
+        <li class="item"><a href="index.html">Home</a></li>
+        <li class="item"><a href="blog.html">My Project</a></li>
+        <li class="item"><a href="testimoni.html">Testimoni</a></li>
+      </ul>
+      <div class="nav-right item">
+        <a href="contact.html">
+          <button>Contact me</button>
+        </a>
+      </div>
+
+      <div class="nav-right" id="hamburger-btn">
+        <button onclick="openNav()">
+          <i class="fa-solid fa-bars" id="menu"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div class="hamburger-nav" id="hamburger-nav">
+      <a href="index.html" class="nav-active">Home</a>
+      <a href="blog.html">My Project</a>
+      <a href="contact.html">Contact</a>
+      <a href="testimoni.html">Testimoni</a>
+    </div>
+
+    <div class="container">
+      <h1>The Testimonials</h1>
+      <h3>The Ratings</h3>
+      <div class="stars">
+        <button class="rating" onclick="allTestimonial()">All</button>
+        <button class="rating" onclick="stars(1)">
+          1 <i class="fa-solid fa-star"></i>
+        </button>
+        <button class="rating" onclick="stars(2)">
+          2 <i class="fa-solid fa-star"></i>
+        </button>
+        <button class="rating" onclick="stars(3)">
+          3 <i class="fa-solid fa-star"></i>
+        </button>
+        <button class="rating" onclick="stars(4)">
+          4 <i class="fa-solid fa-star"></i>
+        </button>
+        <button class="rating" onclick="stars(5)">
+          5 <i class="fa-solid fa-star"></i>
+        </button>
+      </div>
+      <div class="testimonial" id="testimonial"></div>
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script src="js/nav.js"></script>
+  </body>
+</html>
