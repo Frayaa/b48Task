@@ -10,6 +10,12 @@
   backdrop-filter: blur(10px);
 }
 
+#navbar-toggler {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 body {
   background-color: rgb(236, 231, 239);
 }
@@ -42,24 +48,15 @@ body {
 }
 
 .profile {
-  /* width: 90%; */
   height: 92.5%;
   background: url(/images/pink.png);
   background-size: 110%;
   margin-top: 20px;
   align-items: center;
   justify-content: center;
-
   padding: 0 0;
-  /* margin-right: -30px; */
   object-fit: cover;
-  /* margin-left: 25px; */
 }
-
-/* .text-center {
-font-size: 40px;
-margin:20px;
-} */
 
 .bg-pink {
   background: white;
