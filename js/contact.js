@@ -13,7 +13,7 @@ const submitData = (e) => {
     message,
   }
 
-  console.log(object)
+
 
   if (name === "") {
     return alert("Please Fill The Name")
@@ -32,6 +32,6 @@ const submitData = (e) => {
   let a = document.createElement("a")
   a.href = `mailto:${emailReceive}?subject=${subject}&body=Halo nama saya ${name}, \n${message}, silahkan kontak : ${phone}`
   a.click()
-  return console.log(name + "adalah saya")
+ 
 }
 

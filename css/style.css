@@ -1,25 +1,29 @@
 .container-fluid img {
-    height: 60px;
-    width: 65px;
-    margin-right: 20px;
-    object-fit: contain;
-    margin-top: 7px;
+  height: 60px;
+  width: 65px;
+  margin-right: 20px;
+  object-fit: contain;
+  margin-top: 7px;
 }
 
 /* .container-fluid {
     margin-top: 20px;
 } */
 
+body {
+    background-color: rgb(236, 231, 239);
+}
+
 .container-md h1 {
-    text-align: center;
-    margin: 20px ;
+  text-align: center;
+  margin: 20px;
 }
 
 .bgimage {
-    height: 90vh;
-    background: url(/images/bg1.jpeg);
-    background-size: cover;
-    position: relative;
+  height: 100vh;
+  background: url(/images/bg1.jpeg);
+  background-size: cover;
+  position: relative;
 }
 
 .hero_title {
@@ -37,12 +41,34 @@
     color: black
 }
 
-.imageAboutPage {
-    width: 100%;
+.profile {
+  /* width: 90%; */
+  height: 92.5%;
+  background: url(/images/pink.png);
+  background-size: 110%;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+ 
+  padding: 0 0;
+  /* margin-right: -30px; */
+  object-fit: cover;
+  /* margin-left: 25px; */
+
+  
 }
 
-.text-center {
+/* .text-center {
 font-size: 40px;
 margin:20px;
+} */
+
+.bg-pink {
+  background: white;
 }
 
+.btn {
+  color: white;
+  background: rgb(166, 128, 171);
+  margin-left: 20px;
+}

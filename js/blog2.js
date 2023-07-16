@@ -2,7 +2,6 @@ let dataBlog = []
 
 const addBlog = (event) => {
   event.preventDefault()
- 
 
   let project = document.getElementById("input-project").value
   let startDate = document.getElementById("input-start").value
@@ -37,7 +36,6 @@ const addBlog = (event) => {
   let typescript = document.getElementById("typescript").checked ? typeIcon : ""
 
   image = URL.createObjectURL(image[0])
-  console.log(image)
 
   let multiInput = document.querySelectorAll(".multi-input:checked")
   if (multiInput.length === 0) {
@@ -90,33 +88,30 @@ const renderBlog = () => {
   document.getElementById("contents").innerHTML = ""
   for (let i = 0; i < dataBlog.length; i++) {
     document.getElementById("contents").innerHTML += `
-    <div class="container-project">
-    <div class="container-card">
-      <div class="image-project">
-        <img src="${dataBlog[i].image}" />
-      </div>
-      <div class="title-project">
-        <a href="blog-detail.html"><h3>${dataBlog[i].project}</h3></a>
-        <p>Durasi: ${dataBlog[i].duration}</p>
-      </div>
-      <div class="content">
-        <p> 
-          ${dataBlog[i].description}
-        </p>
-      </div>
-      <div class="icon-project">
-        ${dataBlog[i].nodejs}
-        ${dataBlog[i].reactjs}
-        ${dataBlog[i].javascript}
-        ${dataBlog[i].typescript}
-      </div>
-      <div class="button-project">
-        <button>Edit</button>
-        <button>Delete</button>
-      </div>
-      </div>
-   </div>`
+          <div class="d-flex flex-row flex-wrap ml-5">
+          <div class="d-flex flex-row flex-wrap" style="margin-right: 10px;">
+            <div class="card" style="width: 18rem">
+              <img src="${dataBlog[i].image}" class="card-img-top" id="images" />
+              <div class="card-body">
+                <a href="blog-detail.html">
+                  <h3 class="card-title text-left col-8 text-truncate">${dataBlog[i].project}</h3></a>
+                <p>Durasi: ${dataBlog[i].duration}</p>
+                <p class="card-text text-left">
+                  ${dataBlog[i].description}
+                </p>
+                <div class="icon-project">
+                  ${dataBlog[i].nodejs}
+                  ${dataBlog[i].reactjs}
+                  ${dataBlog[i].javascript}
+                  ${dataBlog[i].typescript}
+                </div>
+                <div class="button-project">
+                  <button class="btn-blue">Edit</button>
+                  <button class="btn-blue">Delete</button>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>`
   }
 }
-
-

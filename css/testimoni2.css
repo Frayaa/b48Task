@@ -1,0 +1,24 @@
+#testimoni {
+    margin-top: 8rem;
+    /* padding: 0px; */
+    
+}
+
+#profile-img {
+    width: 100%;
+    height: 200px;
+    padding: 10px 10px;
+}
+
+body {
+    height: 84vh;
+}
+
+.rating {
+    background-color: rgb(205, 99, 117);
+    border-style: none;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+}
