@@ -93,7 +93,7 @@ const renderBlog = () => {
             <div class="card" style="width: 18rem">
               <img src="${dataBlog[i].image}" class="card-img-top" id="images" />
               <div class="card-body">
-                <a href="blog-detail.html">
+                <a href="blog-detail">
                   <h3 class="card-title text-left col-8 text-truncate">${dataBlog[i].project}</h3></a>
                 <p>Durasi: ${dataBlog[i].duration}</p>
                 <p class="card-text text-left">
