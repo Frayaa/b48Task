@@ -15,6 +15,10 @@ type Form struct {
 	start string
 	end string
 	description string
+	nodejs bool
+	reactjs bool
+	javascript bool
+	typescript bool
 }
 
 var formData = []Form {
@@ -23,12 +27,20 @@ var formData = []Form {
 	start: "12/10/2020",
 	end: "12/11/2020",
 	description: "blabla",
+	nodejs: true,
+	reactjs: true,
+	javascript: true,
+	typescript: true,
 },
 	{
-	project: "lalalala",
+	project: "blabalablabla",
 	start: "12/10/2020",
 	end: "12/11/2020",
 	description: "blablablalala",
+	nodejs: true,
+	reactjs: true,
+	javascript: false,
+	typescript: false,
 },
 
 }
@@ -92,14 +104,14 @@ func blog(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	data := map[string]interface{}{
-		"Form": formData,
+		"Forms": formData,
 	}
 
 	return tmpl.Execute(c.Response(), data)
 }
 
 func addBlog(c echo.Context) error {
-	project := c.FormValue("project")
+	projectName := c.FormValue("project")
 	start := c.FormValue("start")
 	end := c.FormValue("end")
 	description := c.FormValue("description")
@@ -111,14 +123,19 @@ func addBlog(c echo.Context) error {
 
 	// append
 	newBlog := Form{
-		project: project,
-		start: "12/10/2020",
-		end: "12/12/2020",
+		project: projectName,
+		start: start,
+		end: end,
 		description: description,
+		reactjs: (reactjs == "reactjs"),
+		nodejs: (nodejs == "nodejs"),
+		javascript: (javascript == "javascript"),
+		typescript: (typescript == "typescript"),
+
 	}
 	formData = append(formData, newBlog)
 
-	fmt.Println("projectName:", project)
+	fmt.Println("projectName:", projectName)
 	fmt.Println("Startdate:", start)
 	fmt.Println("endDate:", end)
 	fmt.Println("description:", description)
@@ -151,6 +168,10 @@ id := c.Param("id")
 				start: data.start,
 				end: data.end,
 				description: data.description,
+				reactjs: data.reactjs,
+				nodejs: data.nodejs,
+				javascript: data.javascript,
+				typescript: data.typescript,
 			}
 		}
 	}
