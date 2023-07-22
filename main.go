@@ -11,37 +11,37 @@ import (
 
 
 type Form struct {
-	project string
-	start string
-	end string
-	description string
-	nodejs bool
-	reactjs bool
-	javascript bool
-	typescript bool
+	ProjectName string
+	Start string
+	End string
+	Description string
+	Nodejs bool
+	Reactjs bool
+	Javascript bool
+	Typescript bool
 }
 
 var formData = []Form {
-	{
-	project: "lala",
-	start: "12/10/2020",
-	end: "12/11/2020",
-	description: "blabla",
-	nodejs: true,
-	reactjs: true,
-	javascript: true,
-	typescript: true,
-},
-	{
-	project: "blabalablabla",
-	start: "12/10/2020",
-	end: "12/11/2020",
-	description: "blablablalala",
-	nodejs: true,
-	reactjs: true,
-	javascript: false,
-	typescript: false,
-},
+	// {
+	// ProjectName: "lala",
+	// Start: "2022-02-02",
+	// End: "2022-02-04",
+	// Description: "blabla",
+	// Nodejs: true,
+	// Reactjs: true,
+	// Javascript: true,
+	// Typescript: true,
+	// },
+	{  
+	ProjectName: "blabalablabla",
+	Start: "2023-08-06",
+	End: "2023-08-10",
+	Description: "blablablalala",
+	Nodejs: true,
+	Reactjs: false,
+	Javascript: true,
+	Typescript: false,
+	},
 
 }
 func main() {
@@ -104,7 +104,7 @@ func blog(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	data := map[string]interface{}{
-		"Forms": formData,
+		"forms": formData,
 	}
 
 	return tmpl.Execute(c.Response(), data)
@@ -123,19 +123,19 @@ func addBlog(c echo.Context) error {
 
 	// append
 	newBlog := Form{
-		project: projectName,
-		start: start,
-		end: end,
-		description: description,
-		reactjs: (reactjs == "reactjs"),
-		nodejs: (nodejs == "nodejs"),
-		javascript: (javascript == "javascript"),
-		typescript: (typescript == "typescript"),
+		ProjectName: projectName,
+		Start: start,
+		End: end,
+		Description: description,
+		Reactjs: (reactjs == "reactjs"),
+		Nodejs: (nodejs == "nodejs"),
+		Javascript: (javascript == "javascript"),
+		Typescript: (typescript == "typescript"),
 
 	}
 	formData = append(formData, newBlog)
 
-	fmt.Println("projectName:", projectName)
+	fmt.Println("project:", projectName)
 	fmt.Println("Startdate:", start)
 	fmt.Println("endDate:", end)
 	fmt.Println("description:", description)
@@ -164,21 +164,21 @@ id := c.Param("id")
 	for index, data := range formData{
 		if index == idToInt{
 			blogDetail = Form{
-				project: data.project,
-				start: data.start,
-				end: data.end,
-				description: data.description,
-				reactjs: data.reactjs,
-				nodejs: data.nodejs,
-				javascript: data.javascript,
-				typescript: data.typescript,
+				ProjectName: data.ProjectName,
+				Start: data.Start,
+				End: data.End,
+				Description: data.Description,
+				Reactjs: data.Reactjs,
+				Nodejs: data.Nodejs,
+				Javascript: data.Javascript,
+				Typescript: data.Typescript,
 			}
 		}
 	}
 
 	data := map[string] interface{}{
 		"id": id,
-		"project": blogDetail,
+		"ProjectDetail": blogDetail,
 	}
 
 	

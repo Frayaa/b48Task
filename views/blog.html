@@ -64,45 +64,45 @@
     </nav>
 
     <div class="container-fluid mt-5">
-      <div class="d-flex mt-5 pt-5">
+      <!-- Blog Detail -->
+      <h1 class="text-center pt-5">My Project</h1>
+      <div class="mb-5 mt-5 text-center">
         <a href="/form-blog" class="btn btn-primary">Add Blog</a>
       </div>
 
-      <!-- Blog Detail -->
-      <h1 id="h1-project" class="text-center">MY PROJECT</h1>
-
-      <div
-        class="blog-list justify-content-center align-items-center ml-5 mt-5"
-      >
-        {{range $index, $val := .Forms}}m m
-
+      <div div class="container container-cards d-flex flex-row">
         <div class="card" style="width: 18rem">
-          <div>
-            <img
-              src="/assets/images/project/.jpeg"
-              class="card-img-top"
-              id="images"
-            />
-          </div>
+          {{ range $index, $form := .forms }}
+          <img
+            src="/assets/images/project.jpeg"
+            class="card-img-top"
+            id="images"
+          />
           <div class="card-body">
-            <div>
-              <a href="blog-detail/0" target="_blank"> lllllll</a>
-            </div>
-            <h3 class="card-title text-left col-8 text-truncate"></h3>
-            <p>Durasi: 3 bulan</p>
-            <p class="card-text text-left">{{$val.description}}</p>
+            <a href="/blog-detail/{{$index}}"
+              ><h3 class="card-title text-left col-8 text-truncate">
+                {{ $form.ProjectName }}
+              </h3></a
+            >
+            <p class="card-text">{{ $form.Description }}</p>
+            <p class="card-subtitle">{{ $form.Duration }}</p>
+            
             <div class="icon-project">
-              <i class="bx bxl-nodejs"></i>
-              <i class="bx bxl-react"></i>
-              <i class="bx bxl-typescript"></i>
+              <div class="row row-cols-auto">
+                <div class="col">{{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}</div>
+                <div class="col">{{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}</div>
+                <div class="col">{{ if $form.Javascript }}<i class="bx bxl-javascript">{{end}}</div>
+                <div class="col">{{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  />{{end}}</div>
+              </div>
             </div>
             <div class="button-project">
               <button class="btn-blue">Edit</button>
               <button class="btn-blue">Delete</button>
             </div>
+            {{end}}
           </div>
         </div>
-        {{end}}
       </div>
     </div>
 
