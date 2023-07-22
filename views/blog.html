@@ -63,46 +63,61 @@
       </div>
     </nav>
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5 pt-5">
       <!-- Blog Detail -->
       <h1 class="text-center pt-5">My Project</h1>
       <div class="mb-5 mt-5 text-center">
         <a href="/form-blog" class="btn btn-primary">Add Blog</a>
       </div>
 
-      <div div class="container container-cards d-flex flex-row">
+      <div class="container d-flex flex-row">
+        {{ range $index, $form := .forms }}
         <div class="card" style="width: 18rem">
-          {{ range $index, $form := .forms }}
           <img
             src="/assets/images/project.jpeg"
             class="card-img-top"
             id="images"
           />
           <div class="card-body">
-            <a href="/blog-detail/{{$index}}"
-              ><h3 class="card-title text-left col-8 text-truncate">
+            <a href="/blog-detail/{{$index}}">
+              <h3 class="card-title text-left col-8 text-truncate">
                 {{ $form.ProjectName }}
-              </h3></a
-            >
+              </h3>
+            </a>
             <p class="card-text">{{ $form.Description }}</p>
-            <p class="card-subtitle">{{ $form.Duration }}</p>
-            
             <div class="icon-project">
               <div class="row row-cols-auto">
-                <div class="col">{{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}</div>
-                <div class="col">{{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}</div>
-                <div class="col">{{ if $form.Javascript }}<i class="bx bxl-javascript">{{end}}</div>
-                <div class="col">{{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
-                  />{{end}}</div>
+                <div class="col">
+                  {{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Javascript }}<i class="bx bxl-javascript"></i
+                  >{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  {{end}}
+                </div>
               </div>
             </div>
-            <div class="button-project">
-              <button class="btn-blue">Edit</button>
-              <button class="btn-blue">Delete</button>
+
+            <!-- Edit Button -->
+            <div>
+              <form action="/form-update/{{$index}}" method="get">
+                <button type="submit" class="btn btn-primary">Edit</button>
+              </form>
+
+              <!-- Delete Button -->
+              <form action="/delete/{{$index}}" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
             </div>
-            {{end}}
           </div>
         </div>
+        {{end}}
       </div>
     </div>
 

@@ -1,0 +1,20 @@
+<!-- <p class="card-subtitle">{{ $form.Duration }}</p> -->
+
+            <!-- <div class="icon-project">
+              <div class="row row-cols-auto">
+                <div class="col">
+                  {{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Javascript }}<i class="bx bxl-javascript"></i
+                  >{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  />{{end}}
+                </div>
+              </div>
+            </div> -->

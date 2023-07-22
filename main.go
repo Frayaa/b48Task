@@ -11,6 +11,7 @@ import (
 
 
 type Form struct {
+	Id int
 	ProjectName string
 	Start string
 	End string
@@ -22,20 +23,20 @@ type Form struct {
 }
 
 var formData = []Form {
-	// {
-	// ProjectName: "lala",
-	// Start: "2022-02-02",
-	// End: "2022-02-04",
-	// Description: "blabla",
-	// Nodejs: true,
-	// Reactjs: true,
-	// Javascript: true,
-	// Typescript: true,
-	// },
+	{
+	ProjectName: "lalalalal",
+	Start: "2022-02-02",
+	End: "2022-02-04",
+	Description: "blabla",
+	Nodejs: true,
+	Reactjs: true,
+	Javascript: true,
+	Typescript: true,
+	},
 	{  
 	ProjectName: "blabalablabla",
-	Start: "2023-08-06",
-	End: "2023-08-10",
+	Start: "06-08-2020",
+	End: "06-10-2020",
 	Description: "blablablalala",
 	Nodejs: true,
 	Reactjs: false,
@@ -44,6 +45,7 @@ var formData = []Form {
 	},
 
 }
+
 func main() {
 	e := echo.New()
 
@@ -53,10 +55,13 @@ func main() {
 	e.GET("/contact", contact)
 	e.GET("/form-blog", formBlog)
 	e.GET("/blog", blog)
-	e.POST("/add-blog", addBlog)
 	e.GET("/blog-detail/:id", blogDetail)
 	e.GET("/testimoni", testimoni)
-
+	e.GET("/form-update/:id", FormUpdate)
+	
+	e.POST("/add-blog", addBlog)
+	e.POST("/update-blog", updatedBlog)
+	e.POST("/delete/:id", deleteBlog)
 	e.GET("/about", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string {
 			"message": "Hello World",
@@ -122,7 +127,8 @@ func addBlog(c echo.Context) error {
 	image := c.FormValue("image")
 
 	// append
-	newBlog := Form{
+	var newBlog = Form{
+
 		ProjectName: projectName,
 		Start: start,
 		End: end,
@@ -149,7 +155,9 @@ func addBlog(c echo.Context) error {
 }
 
 func blogDetail(c echo.Context) error {
-id := c.Param("id")
+
+
+	id := c.Param("id")
 
 	tmpl, err := template.ParseFiles("views/blog-detail.html")
 
@@ -177,7 +185,7 @@ id := c.Param("id")
 	}
 
 	data := map[string] interface{}{
-		"id": id,
+		"id" : idToInt,
 		"ProjectDetail": blogDetail,
 	}
 
@@ -194,4 +202,105 @@ func testimoni(c echo.Context) error {
 
 	return tmpl.Execute(c.Response(), nil)
 }
+
+// delete
+func deleteBlog(c echo.Context) error {
+	id := c.Param("id")
+	idToInt, _ := strconv.Atoi(id)
+
+	formData = append(formData[:idToInt], formData[idToInt+1:]...)
+
+	return c.Redirect(http.StatusMovedPermanently, "/blog")
+
+
+}
+
+
+// update
+func FormUpdate(c echo.Context)error{
+
+	Id, _:= strconv.Atoi(c.Param("Id"))
+
+	
+
+	blogUpdate := Form{}
+
+	for index, data := range formData{
+		if Id == index{
+			blogUpdate = Form{
+				ProjectName: data.ProjectName,
+				Start: data.Start,
+				End: data.End,
+				Description: data.Description,
+				Reactjs: data.Reactjs,
+				Nodejs: data.Nodejs,
+				Javascript: data.Javascript,
+				Typescript: data.Typescript,
+			}
+		}
+	}
+
+	data := map[string] interface{}{
+		"Id": Id,
+		"forms": blogUpdate,
+	}
+
+	tmpl, err := template.ParseFiles("views/form-update.html")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	
+	return tmpl.Execute(c. Response(), data)
+}
+
+func updatedBlog(c echo.Context) error{
+	id, _ := strconv.Atoi(c.FormValue("id"))
+	projectName := c.FormValue("project")
+	start := c.FormValue("start")
+	end := c.FormValue("end")
+	description := c.FormValue("description")
+	nodejs := c.FormValue("nodejs")
+	reactjs := c.FormValue("reactjs")
+	javascript := c.FormValue("javascript")
+	typescript := c.FormValue("typescript")
+	
+
+	formData[id].ProjectName = projectName
+	formData[id].Start = start
+	formData[id].End = end
+	formData[id].Description = description
+	formData[id].Nodejs = (nodejs == "nodejs")
+	formData[id].Reactjs = (reactjs == "reactjs")
+	formData[id].Javascript = (javascript == "javascript")
+	formData[id].Typescript = (typescript == "typescript")
+	// append
+ 	// newBlog := Form{
+	// 	ProjectName: projectName,
+	// 	Start: start,
+	// 	End: end,
+	// 	Description: description,
+	// 	Reactjs: (reactjs == "reactjs"),
+	// 	Nodejs: (nodejs == "nodejs"),
+	// 	Javascript: (javascript == "javascript"),
+	// 	Typescript: (typescript == "typescript"),
+
+	// }
+	
+	// formData[id] = newBlog
+
+	return  c.Redirect(http.StatusMovedPermanently, "/blog")
+}
+
+// func formatDuration(duration time.Duration) string {
+// 	months := duration / (time.Hour * 24 * 30)
+// 	duration %= time.Hour * 24 * 30
+// 	weeks := duration / (time.Hour * 24 * 7)
+// 	duration %= time.Hour * 24 * 7
+// 	days := duration / (time.Hour * 24)
+// 	duration %= time.Hour * 24
+
+// 	return fmt.Sprintf("%d months, %d weeks, %d days", months, weeks, days)
+// }
 
