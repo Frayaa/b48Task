@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -15,6 +16,7 @@ type Form struct {
 	ProjectName string
 	Start string
 	End string
+	Duration string
 	Description string
 	Nodejs bool
 	Reactjs bool
@@ -28,6 +30,7 @@ var formData = []Form {
 	ProjectName: "lalalalal",
 	Start: "2022-02-02",
 	End: "2022-02-04",
+	Duration: timeDuration("2022-02-02", "2022-02-04"),
 	Description: "blabla",
 	Nodejs: true,
 	Reactjs: true,
@@ -37,8 +40,9 @@ var formData = []Form {
 	{  
 	Id:1,
 	ProjectName: "blabalablabla",
-	Start: "06-08-2020",
-	End: "06-10-2020",
+	Start: "2022-02-02",
+	End: "2020-04-02",
+	Duration: timeDuration("2022-02-02", "2020-04-02"),
 	Description: "blablablalala",
 	Nodejs: true,
 	Reactjs: false,
@@ -48,8 +52,9 @@ var formData = []Form {
 	{  
 	Id:2,
 	ProjectName: "test",
-	Start: "06-08-2020",
-	End: "06-10-2020",
+	Start: "2020-08-01",
+	End: "2020-10-11",
+	Duration: timeDuration("2020-08-01", "2020-10-11"),
 	Description: "blablablalala",
 	Nodejs: true,
 	Reactjs: true,
@@ -144,6 +149,7 @@ func addBlog(c echo.Context) error {
 		ProjectName: projectName,
 		Start: start,
 		End: end,
+		Duration: timeDuration(start, end),
 		Description: description,
 		Reactjs: (reactjs == "reactjs"),
 		Nodejs: (nodejs == "nodejs"),
@@ -188,6 +194,7 @@ func blogDetail(c echo.Context) error {
 				ProjectName: data.ProjectName,
 				Start: data.Start,
 				End: data.End,
+				Duration: data.Duration,
 				Description: data.Description,
 				Reactjs: data.Reactjs,
 				Nodejs: data.Nodejs,
@@ -242,6 +249,7 @@ func FormUpdate(c echo.Context)error{
 				ProjectName: data.ProjectName,
 				Start: data.Start,
 				End: data.End,
+				Duration: data.Duration,
 				Description: data.Description,
 				Reactjs: data.Reactjs,
 				Nodejs: data.Nodejs,
@@ -281,37 +289,34 @@ func updatedBlog(c echo.Context) error{
 	formData[id].ProjectName = projectName
 	formData[id].Start = start
 	formData[id].End = end
+	formData[id].Duration = timeDuration(start, end)
 	formData[id].Description = description
 	formData[id].Nodejs = (nodejs == "nodejs")
 	formData[id].Reactjs = (reactjs == "reactjs")
 	formData[id].Javascript = (javascript == "javascript")
 	formData[id].Typescript = (typescript == "typescript")
-	// append
- 	// newBlog := Form{
-	// 	ProjectName: projectName,
-	// 	Start: start,
-	// 	End: end,
-	// 	Description: description,
-	// 	Reactjs: (reactjs == "reactjs"),
-	// 	Nodejs: (nodejs == "nodejs"),
-	// 	Javascript: (javascript == "javascript"),
-	// 	Typescript: (typescript == "typescript"),
-
-	// }
-	
-	// formData[id] = newBlog
 
 	return  c.Redirect(http.StatusMovedPermanently, "/blog")
 }
 
-// func formatDuration(duration time.Duration) string {
-// 	months := duration / (time.Hour * 24 * 30)
-// 	duration %= time.Hour * 24 * 30
-// 	weeks := duration / (time.Hour * 24 * 7)
-// 	duration %= time.Hour * 24 * 7
-// 	days := duration / (time.Hour * 24)
-// 	duration %= time.Hour * 24
+func timeDuration(start, end string) string {
+	date1, _ := time.Parse("2006-01-02", start)
+	date2, _ := time.Parse("2006-01-02", end)
 
-// 	return fmt.Sprintf("%d months, %d weeks, %d days", months, weeks, days)
-// }
+	difference := date2.Sub(date1)
+	days := int(difference.Hours() / 24)
+	weeks := days / 7
+	months := days / 30
+
+	if months > 12 {
+		return strconv.Itoa(months/12) + " tahun"
+	}
+	if months > 0 {
+		return strconv.Itoa(months) + " bulan"
+	}
+	if weeks > 0 {
+		return strconv.Itoa(weeks) + " minggu"
+	}
+	return strconv.Itoa(days) + " hari"
+}
 
