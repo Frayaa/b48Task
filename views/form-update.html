@@ -74,7 +74,7 @@
           action="/update-blog"
           method="POST"
         >
-          <input value="{{.forms.Id}}" name="Id" />
+          <input type="hidden" value="{{.forms.Id}}" id="id" name="id" />
           <div class="form-group-row">
             <label> Project Name </label>
             <input

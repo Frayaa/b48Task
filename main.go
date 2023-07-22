@@ -24,6 +24,7 @@ type Form struct {
 
 var formData = []Form {
 	{
+	Id: 0,
 	ProjectName: "lalalalal",
 	Start: "2022-02-02",
 	End: "2022-02-04",
@@ -34,12 +35,24 @@ var formData = []Form {
 	Typescript: true,
 	},
 	{  
+	Id:1,
 	ProjectName: "blabalablabla",
 	Start: "06-08-2020",
 	End: "06-10-2020",
 	Description: "blablablalala",
 	Nodejs: true,
 	Reactjs: false,
+	Javascript: true,
+	Typescript: false,
+	},
+	{  
+	Id:2,
+	ProjectName: "test",
+	Start: "06-08-2020",
+	End: "06-10-2020",
+	Description: "blablablalala",
+	Nodejs: true,
+	Reactjs: true,
 	Javascript: true,
 	Typescript: false,
 	},
@@ -128,7 +141,6 @@ func addBlog(c echo.Context) error {
 
 	// append
 	var newBlog = Form{
-
 		ProjectName: projectName,
 		Start: start,
 		End: end,
@@ -172,6 +184,7 @@ func blogDetail(c echo.Context) error {
 	for index, data := range formData{
 		if index == idToInt{
 			blogDetail = Form{
+				Id:index,
 				ProjectName: data.ProjectName,
 				Start: data.Start,
 				End: data.End,
@@ -219,15 +232,13 @@ func deleteBlog(c echo.Context) error {
 // update
 func FormUpdate(c echo.Context)error{
 
-	Id, _:= strconv.Atoi(c.Param("Id"))
-
-	
-
+	id, _ := strconv.Atoi(c.Param("id"))
 	blogUpdate := Form{}
 
 	for index, data := range formData{
-		if Id == index{
+		if id == index{
 			blogUpdate = Form{
+				Id: index,
 				ProjectName: data.ProjectName,
 				Start: data.Start,
 				End: data.End,
@@ -241,7 +252,7 @@ func FormUpdate(c echo.Context)error{
 	}
 
 	data := map[string] interface{}{
-		"Id": Id,
+		"id": id,
 		"forms": blogUpdate,
 	}
 
