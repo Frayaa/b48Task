@@ -349,8 +349,6 @@ func updatedBlog(c echo.Context) error{
 }
 
 func timeDuration(a time.Time, b time.Time) string {
-	// date1, _ := time.Parse("2006-01-02", a)
-	// date2, _ := time.Parse("2006-01-02", b)
 
 	difference := b.Sub(a)
 	days := int(difference.Hours() / 24)
