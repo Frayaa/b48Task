@@ -128,7 +128,7 @@ func formBlog(c echo.Context) error {
 
 func blog(c echo.Context) error {
 	
-	data1, errData := connection.Conn.Query(context.Background(), "SELECT * FROM tb_project")
+	data1, errData := connection.Conn.Query(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project")
 
 	if errData != nil {
 		return c.JSON(http.StatusInternalServerError, errData.Error())
