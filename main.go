@@ -299,7 +299,7 @@ func updatedBlog(c echo.Context) error{
 	return  c.Redirect(http.StatusMovedPermanently, "/blog")
 }
 
-func timeDuration(start, end string) string {
+func timeDuration(start string, end string) string {
 	date1, _ := time.Parse("2006-01-02", start)
 	date2, _ := time.Parse("2006-01-02", end)
 
