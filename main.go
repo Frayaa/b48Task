@@ -1,8 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"html/template"
+	"myapp/connection"
 	"net/http"
 	"strconv"
 	"time"
@@ -18,49 +20,51 @@ type Form struct {
 	End string
 	Duration string
 	Description string
+	Technologies []string
 	Nodejs bool
 	Reactjs bool
 	Javascript bool
 	Typescript bool
+	Image string
 }
 
 var formData = []Form {
-	{
-	Id: 0,
-	ProjectName: "lalalalal",
-	Start: "2022-02-02",
-	End: "2022-02-04",
-	Duration: timeDuration("2022-02-02", "2022-02-04"),
-	Description: "blabla",
-	Nodejs: true,
-	Reactjs: true,
-	Javascript: true,
-	Typescript: true,
-	},
-	{  
-	Id:1,
-	ProjectName: "blabalablabla",
-	Start: "2022-02-02",
-	End: "2020-04-02",
-	Duration: timeDuration("2022-02-02", "2020-04-02"),
-	Description: "blablablalala",
-	Nodejs: true,
-	Reactjs: false,
-	Javascript: true,
-	Typescript: false,
-	},
-	{  
-	Id:2,
-	ProjectName: "test",
-	Start: "2020-08-01",
-	End: "2020-10-11",
-	Duration: timeDuration("2020-08-01", "2020-10-11"),
-	Description: "blablablalala",
-	Nodejs: true,
-	Reactjs: true,
-	Javascript: true,
-	Typescript: false,
-	},
+	// {
+	// Id: 0,
+	// ProjectName: "lalalalal",
+	// Start: "2022-02-02",
+	// End: "2022-02-04",
+	// Duration: timeDuration("2022-02-02", "2022-02-04"),
+	// Description: "blabla",
+	// Nodejs: true,
+	// Reactjs: true,
+	// Javascript: true,
+	// Typescript: true,
+	// },
+	// {  
+	// Id:1,
+	// ProjectName: "blabalablabla",
+	// Start: "2022-02-02",
+	// End: "2020-04-02",
+	// Duration: timeDuration("2022-02-02", "2020-04-02"),
+	// Description: "blablablalala",
+	// Nodejs: true,
+	// Reactjs: false,
+	// Javascript: true,
+	// Typescript: false,
+	// },
+	// {  
+	// Id:2,
+	// ProjectName: "test",
+	// Start: "2020-08-01",
+	// End: "2020-10-11",
+	// Duration: timeDuration("2020-08-01", "2020-10-11"),
+	// Description: "blablablalala",
+	// Nodejs: true,
+	// Reactjs: true,
+	// Javascript: true,
+	// Typescript: false,
+	// },
 
 }
 
@@ -121,14 +125,54 @@ func formBlog(c echo.Context) error {
 }
 
 func blog(c echo.Context) error {
+
 	tmpl, err := template.ParseFiles("views/blog.html")
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
+
+	formData, errData := connection.Conn.Query(context.Background(), "SELECT projectName, startDate, endDate, description, technologies FROM tb_project")
+
+	if errData != nil {
+		return c.JSON(http.StatusInternalServerError, errData.Error())
+	}
+
+	var resultForms []Form
+	for formData.Next() {
+		var each = Form{}
+
+		err := formData.Scan(&each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, err.Error())
+
+		}
+
+		each.Duration = timeDuration(each.Start, each.End)
+		if checkValue(each.Technologies, "nodejs") {
+			each.Nodejs = true
+		}
+		if checkValue(each.Technologies, "reactjs") {
+			each.Reactjs = true
+		}
+		if checkValue(each.Technologies, "javascript" ) {
+			each.Javascript = true
+			
+		}
+		if checkValue(each.Technologies, "typeScript") {
+			each.Typescript = true
+		}
+
+		resultForms = append(resultForms, each)
+	}
+
 	data := map[string]interface{}{
 		"forms": formData,
 	}
+
+	
+	
 
 	return tmpl.Execute(c.Response(), data)
 }
@@ -318,5 +362,16 @@ func timeDuration(start, end string) string {
 		return strconv.Itoa(weeks) + " minggu"
 	}
 	return strconv.Itoa(days) + " hari"
+}
+
+func checkValue(tech []string, obj string) bool {
+	for _, data := range tech {
+		if data == obj {
+			return true
+		}
+
+	}
+	return false
+
 }
 
