@@ -40,9 +40,9 @@ var formData = []Form {
 	{  
 	Id:1,
 	ProjectName: "blabalablabla",
-	Start: "2022-02-02",
+	Start: "2020-02-02",
 	End: "2020-04-02",
-	Duration: timeDuration("2022-02-02", "2020-04-02"),
+	Duration: timeDuration("2020-02-02", "2020-04-02"),
 	Description: "blablablalala",
 	Nodejs: true,
 	Reactjs: false,
