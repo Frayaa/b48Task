@@ -16,8 +16,8 @@ import (
 type Form struct {
 	Id int
 	ProjectName string
-	Start string
-	End string
+	Start time.Time
+	End time.Time
 	Duration string
 	Description string
 	Technologies []string
@@ -70,6 +70,8 @@ var formData = []Form {
 
 func main() {
 	e := echo.New()
+
+	connection.DatabaseConnect()
 
 	e.Static("/assets", "assets")
 
@@ -125,31 +127,25 @@ func formBlog(c echo.Context) error {
 }
 
 func blog(c echo.Context) error {
-
-	tmpl, err := template.ParseFiles("views/blog.html")
-
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	formData, errData := connection.Conn.Query(context.Background(), "SELECT projectName, startDate, endDate, description, technologies FROM tb_project")
+	
+	data1, errData := connection.Conn.Query(context.Background(), "SELECT * FROM tb_project")
 
 	if errData != nil {
 		return c.JSON(http.StatusInternalServerError, errData.Error())
 	}
 
-	var resultForms []Form
-	for formData.Next() {
+	formData = []Form{}
+	for data1.Next() {
 		var each = Form{}
 
-		err := formData.Scan(&each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
+		err := data1.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, err.Error())
 
 		}
 
-		each.Duration = timeDuration(each.Start, each.End)
+		each.Duration = timeDuration(each.Start, each.End )
 		if checkValue(each.Technologies, "nodejs") {
 			each.Nodejs = true
 		}
@@ -158,21 +154,23 @@ func blog(c echo.Context) error {
 		}
 		if checkValue(each.Technologies, "javascript" ) {
 			each.Javascript = true
-			
 		}
 		if checkValue(each.Technologies, "typeScript") {
 			each.Typescript = true
 		}
 
-		resultForms = append(resultForms, each)
+		formData = append(formData, each)
 	}
 
 	data := map[string]interface{}{
 		"forms": formData,
 	}
 
-	
-	
+	tmpl, err := template.ParseFiles("views/blog.html")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
 
 	return tmpl.Execute(c.Response(), data)
 }
@@ -188,12 +186,15 @@ func addBlog(c echo.Context) error {
 	typescript := c.FormValue("typescript")
 	image := c.FormValue("image")
 
+	date1, _ := time.Parse("2006-01-02", start)
+	date2, _ := time.Parse("2006-01-02", end)
+
 	// append
 	var newBlog = Form{
 		ProjectName: projectName,
-		Start: start,
-		End: end,
-		Duration: timeDuration(start, end),
+		Start: date1,
+		End: date2,
+		Duration: timeDuration(date1, date2),
 		Description: description,
 		Reactjs: (reactjs == "reactjs"),
 		Nodejs: (nodejs == "nodejs"),
@@ -250,7 +251,9 @@ func blogDetail(c echo.Context) error {
 
 	data := map[string] interface{}{
 		"id" : idToInt,
-		"ProjectDetail": blogDetail,
+		"ProjectDetail" : blogDetail,
+		"startDate" 	: blogDetail.Start.Format("2006-01-02"),
+		"endDate"		: blogDetail.End.Format("2006-01-02"),
 	}
 
 	
@@ -329,11 +332,13 @@ func updatedBlog(c echo.Context) error{
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
 	
+	date1, _ := time.Parse("2006-01-02", start)
+	date2, _ := time.Parse("2006-01-02", end)
 
 	formData[id].ProjectName = projectName
-	formData[id].Start = start
-	formData[id].End = end
-	formData[id].Duration = timeDuration(start, end)
+	formData[id].Start = date1
+	formData[id].End = date2
+	formData[id].Duration = timeDuration(date1, date2 )
 	formData[id].Description = description
 	formData[id].Nodejs = (nodejs == "nodejs")
 	formData[id].Reactjs = (reactjs == "reactjs")
@@ -343,11 +348,11 @@ func updatedBlog(c echo.Context) error{
 	return  c.Redirect(http.StatusMovedPermanently, "/blog")
 }
 
-func timeDuration(start, end string) string {
-	date1, _ := time.Parse("2006-01-02", start)
-	date2, _ := time.Parse("2006-01-02", end)
+func timeDuration(a time.Time, b time.Time) string {
+	// date1, _ := time.Parse("2006-01-02", a)
+	// date2, _ := time.Parse("2006-01-02", b)
 
-	difference := date2.Sub(date1)
+	difference := b.Sub(a)
 	days := int(difference.Hours() / 24)
 	weeks := days / 7
 	months := days / 30

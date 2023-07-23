@@ -64,7 +64,7 @@
 
     <div class="container" id="blog-detail">
       <div class="blog">
-        <h1 class="text-center">{{ .ProjectDetail.ProjectName }}</h1>
+        <h1 class="text-center">{{.ProjectDetail.ProjectName}}</h1>
         <div class="row no-gutters mt-5">
           <div class="col-md-8 col-lg-6">
             <img
@@ -78,8 +78,7 @@
             <div class="d-flex flex-column">
               <h2>Duration</h2>
               <p>
-                <i class="bx bxs-calendar"></i>{{ .ProjectDetail.Start }} - {{
-                .ProjectDetail.End }}
+                <i class="bx bxs-calendar"></i>{{ .startDate }} - {{ .endDate }}
               </p>
 
               <p><i class="bx bx-time-five"></i>1 month</p>
