@@ -7,10 +7,11 @@
 }
 
 .card-text {
-  height: 100px;
+  height: 80px;
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
+  
 }
 
 #images {
