@@ -116,7 +116,13 @@
 
               <!-- Delete Button -->
               <form action="/delete/{{$form.Id}}" method="post">
-                <button type="submit" class="btn-blue">Delete</button>
+                <button
+                  type="submit"
+                  class="btn-blue"
+                  Onclick="return ConfirmDelete();"
+                >
+                  Delete
+                </button>
               </form>
             </div>
           </div>
@@ -131,5 +137,10 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function ConfirmDelete() {
+        return confirm("Are you sure you want to delete?")
+      }
+    </script>
   </body>
 </html>
