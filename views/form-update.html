@@ -74,14 +74,14 @@
           action="/update-blog"
           method="POST"
         >
-          <input type="hidden" value="{{.forms.Id}}" id="id" name="id" />
+          <input type="hidden" id="id" name="id" value="{{.id}}" />
           <div class="form-group-row">
             <label> Project Name </label>
             <input
               id="input-project"
               class="form-control form-control-lg"
               name="project"
-              value="{{.forms.ProjectName}}"
+              value="{{.ProjectDetail.ProjectName}}"
             />
           </div>
           <div
@@ -94,7 +94,7 @@
                 type="date"
                 class="form-control form-control-lg"
                 name="start"
-                value="{{.forms.Start}}"
+                value="{{.startDate}}"
               />
             </div>
             <div class="">
@@ -104,7 +104,7 @@
                 type="date"
                 class="form-control form-control-lg"
                 name="end"
-                value="{{.forms.End}}"
+                value="{{.endDate}}"
               />
             </div>
           </div>
@@ -115,7 +115,7 @@
               id="input-description"
               class="form-control form-control-lg"
               name="description"
-              value="{{.forms.Description}}"
+              value="{{.ProjectDetail.Description}}"
             />
           </div>
 
@@ -131,6 +131,11 @@
                     style="width: 40x"
                     ;
                     name="nodejs"
+                    value="nodejs"
+                    {{if
+                    .ProjectDetail.Nodejs}}
+                    checked
+                    {{end}}
                   />
                   Node Js
                 </label>
@@ -140,6 +145,11 @@
                     id="reactjs"
                     class="form-check-input multi-input"
                     name="reactjs"
+                    value="reactjs"
+                    {{if
+                    .ProjectDetail.Reactjs}}
+                    checked
+                    {{end}}
                   />
                   React Js
                 </label>
@@ -151,6 +161,11 @@
                     id="javascript"
                     class="form-check-input multi-input"
                     name="javascript"
+                    value="javascript"
+                    {{if
+                    .ProjectDetail.Javascript}}
+                    checked
+                    {{end}}
                   />
                   Javascript
                 </label>
@@ -160,6 +175,11 @@
                     id="typescript"
                     class="form-check-input multi-input"
                     name="typescript"
+                    value="typescript"
+                    {{if
+                    .ProjectDetail.Typescript}}
+                    checked
+                    {{end}}
                   />
                   TypeScript
                 </label>

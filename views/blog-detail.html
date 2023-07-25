@@ -81,7 +81,7 @@
                 <i class="bx bxs-calendar"></i>{{ .startDate }} - {{ .endDate }}
               </p>
 
-              <p><i class="bx bx-time-five"></i>1 month</p>
+              <p><i class="bx bx-time-five"></i>{{ .ProjectDetail.Duration}}</p>
             </div>
             <h2>Technologies</h2>
             <div class="d-flex flex-row gap-3">
@@ -98,15 +98,15 @@
               <div class="col-lg-3 col-md-6 mt-2">
                 <p>
                   {{ if .ProjectDetail.Javascript }}<i
-                    class="bx bxl-typescript"
-                  ></i
-                  >Typescript{{end}}
-                </p>
-                <p>
-                  {{ if .ProjectDetail.Typescript }}<i
                     class="bx bxl-javascript"
                   ></i
                   >Javascript{{end}}
+                </p>
+                <p>
+                  {{ if .ProjectDetail.Typescript }}
+                  <i class="bx bxl-typescript"></i>
+
+                  Typescript{{end}}
                 </p>
               </div>
             </div>

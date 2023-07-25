@@ -82,7 +82,7 @@
             id="images"
           />
           <div class="card-body">
-            <a href="/blog-detail/{{$index}}">
+            <a href="/blog-detail/{{$form.Id}}">
               <h3 class="card-title text-left col-8 text-truncate">
                 {{ $form.ProjectName }}
               </h3>
@@ -110,12 +110,12 @@
 
             <!-- Edit Button -->
             <div class="d-flex flex-row flex-wrap gap-2 justify-content-center">
-              <form action="/form-update/{{$index}}" method="GET">
+              <form action="/form-update/{{$form.Id}}" method="GET">
                 <button type="submit" class="btn-blue">Edit</button>
               </form>
 
               <!-- Delete Button -->
-              <form action="/delete/{{$index}}" method="post">
+              <form action="/delete/{{$form.Id}}" method="post">
                 <button type="submit" class="btn-blue">Delete</button>
               </form>
             </div>

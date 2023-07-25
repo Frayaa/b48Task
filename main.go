@@ -29,42 +29,6 @@ type Form struct {
 }
 
 var formData = []Form {
-	// {
-	// Id: 0,
-	// ProjectName: "lalalalal",
-	// Start: "2022-02-02",
-	// End: "2022-02-04",
-	// Duration: timeDuration("2022-02-02", "2022-02-04"),
-	// Description: "blabla",
-	// Nodejs: true,
-	// Reactjs: true,
-	// Javascript: true,
-	// Typescript: true,
-	// },
-	// {  
-	// Id:1,
-	// ProjectName: "blabalablabla",
-	// Start: "2022-02-02",
-	// End: "2020-04-02",
-	// Duration: timeDuration("2022-02-02", "2020-04-02"),
-	// Description: "blablablalala",
-	// Nodejs: true,
-	// Reactjs: false,
-	// Javascript: true,
-	// Typescript: false,
-	// },
-	// {  
-	// Id:2,
-	// ProjectName: "test",
-	// Start: "2020-08-01",
-	// End: "2020-10-11",
-	// Duration: timeDuration("2020-08-01", "2020-10-11"),
-	// Description: "blablablalala",
-	// Nodejs: true,
-	// Reactjs: true,
-	// Javascript: true,
-	// Typescript: false,
-	// },
 
 }
 
@@ -128,17 +92,17 @@ func formBlog(c echo.Context) error {
 
 func blog(c echo.Context) error {
 	
-	data1, errData := connection.Conn.Query(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project")
+	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project")
 
 	if errData != nil {
 		return c.JSON(http.StatusInternalServerError, errData.Error())
 	}
 
 	formData = []Form{}
-	for data1.Next() {
+	for dataQuery.Next() {
 		var each = Form{}
 
-		err := data1.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
+		err := dataQuery.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, err.Error())
@@ -146,6 +110,7 @@ func blog(c echo.Context) error {
 		}
 
 		each.Duration = timeDuration(each.Start, each.End )
+
 		if checkValue(each.Technologies, "nodejs") {
 			each.Nodejs = true
 		}
@@ -155,7 +120,7 @@ func blog(c echo.Context) error {
 		if checkValue(each.Technologies, "javascript" ) {
 			each.Javascript = true
 		}
-		if checkValue(each.Technologies, "typeScript") {
+		if checkValue(each.Technologies, "typescript") {
 			each.Typescript = true
 		}
 
@@ -176,9 +141,9 @@ func blog(c echo.Context) error {
 }
 
 func addBlog(c echo.Context) error {
-	projectName := c.FormValue("project")
-	start := c.FormValue("start")
-	end := c.FormValue("end")
+	project_name := c.FormValue("project")
+	start_date := c.FormValue("start")
+	end_date := c.FormValue("end")
 	description := c.FormValue("description")
 	nodejs := c.FormValue("nodejs")
 	reactjs := c.FormValue("reactjs")
@@ -186,27 +151,25 @@ func addBlog(c echo.Context) error {
 	typescript := c.FormValue("typescript")
 	image := c.FormValue("image")
 
-	date1, _ := time.Parse("2006-01-02", start)
-	date2, _ := time.Parse("2006-01-02", end)
+	date1, _ := time.Parse("2006-01-02", start_date)
+	date2, _ := time.Parse("2006-01-02", end_date)
 
-	// append
-	var newBlog = Form{
-		ProjectName: projectName,
-		Start: date1,
-		End: date2,
-		Duration: timeDuration(date1, date2),
-		Description: description,
-		Reactjs: (reactjs == "reactjs"),
-		Nodejs: (nodejs == "nodejs"),
-		Javascript: (javascript == "javascript"),
-		Typescript: (typescript == "typescript"),
+	technologies := []string{nodejs, reactjs, javascript, typescript}
 
+
+	add, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (project_name, start_date, end_date, description, technologies, image) VALUES ($1, $2, $3, $4, $5, $6)",
+	project_name, date1, date2, description, technologies, "project.jpeg")
+
+	fmt.Println("rowaffected:", add.RowsAffected())
+
+	if err != nil {
+		fmt.Println("error")
+		c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	formData = append(formData, newBlog)
 
-	fmt.Println("project:", projectName)
-	fmt.Println("Startdate:", start)
-	fmt.Println("endDate:", end)
+	fmt.Println("project:", project_name)
+	fmt.Println("Startdate:", start_date)
+	fmt.Println("endDate:", end_date)
 	fmt.Println("description:", description)
 	fmt.Println("nodejs:", nodejs)
 	fmt.Println("reactjs:", reactjs)
@@ -218,8 +181,6 @@ func addBlog(c echo.Context) error {
 }
 
 func blogDetail(c echo.Context) error {
-
-
 	id := c.Param("id")
 
 	tmpl, err := template.ParseFiles("views/blog-detail.html")
@@ -228,36 +189,40 @@ func blogDetail(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	idToInt, _ := strconv.Atoi(id)
-
 	blogDetail := Form{}
 
-	for index, data := range formData{
-		if index == idToInt{
-			blogDetail = Form{
-				Id:index,
-				ProjectName: data.ProjectName,
-				Start: data.Start,
-				End: data.End,
-				Duration: data.Duration,
-				Description: data.Description,
-				Reactjs: data.Reactjs,
-				Nodejs: data.Nodejs,
-				Javascript: data.Javascript,
-				Typescript: data.Typescript,
-			}
-		}
-	}
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image)
 
-	data := map[string] interface{}{
-		"id" : idToInt,
-		"ProjectDetail" : blogDetail,
-		"startDate" 	: blogDetail.Start.Format("2006-01-02"),
-		"endDate"		: blogDetail.End.Format("2006-01-02"),
-	}
-
+	fmt.Println("data query:", errQuery)
 	
-	return tmpl.Execute(c. Response(), data)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	blogDetail.Duration = timeDuration(blogDetail.Start, blogDetail.End)
+
+	if checkValue(blogDetail.Technologies, "nodejs") {
+		blogDetail.Nodejs = true
+	}
+	if checkValue(blogDetail.Technologies, "reactjs") {
+		blogDetail.Reactjs = true
+	}
+	if checkValue(blogDetail.Technologies, "javascript" ) {
+		blogDetail.Javascript = true
+	}
+	if checkValue(blogDetail.Technologies, "typescript") {
+		blogDetail.Typescript = true
+	}
+
+		data := map[string] interface{}{
+			"id" : id,
+			"ProjectDetail" : blogDetail,
+			"startDate" 	: blogDetail.Start.Format("2006-01-02"),
+			"endDate"		: blogDetail.End.Format("2006-01-02"),
+		}
+	
+		return tmpl.Execute(c. Response(), data)
 }
 
 func testimoni(c echo.Context) error {
@@ -275,41 +240,53 @@ func deleteBlog(c echo.Context) error {
 	id := c.Param("id")
 	idToInt, _ := strconv.Atoi(id)
 
-	formData = append(formData[:idToInt], formData[idToInt+1:]...)
+	_, err := connection.Conn.Exec(context.Background(), "DELETE FROM tb_project WHERE id=$1", idToInt)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
 
 	return c.Redirect(http.StatusMovedPermanently, "/blog")
-
-
 }
 
 
 // update
 func FormUpdate(c echo.Context)error{
-
 	id, _ := strconv.Atoi(c.Param("id"))
-	blogUpdate := Form{}
 
-	for index, data := range formData{
-		if id == index{
-			blogUpdate = Form{
-				Id: index,
-				ProjectName: data.ProjectName,
-				Start: data.Start,
-				End: data.End,
-				Duration: data.Duration,
-				Description: data.Description,
-				Reactjs: data.Reactjs,
-				Nodejs: data.Nodejs,
-				Javascript: data.Javascript,
-				Typescript: data.Typescript,
-			}
+	blogDetail := Form{}
+
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image)
+
+	fmt.Println("data query:", errQuery)
+	
+	if errQuery != nil {
+		return c.JSON(http.StatusInternalServerError, errQuery.Error())
+	}
+
+	blogDetail.Duration = timeDuration(blogDetail.Start, blogDetail.End)
+
+	if checkValue(blogDetail.Technologies, "nodejs") {
+		blogDetail.Nodejs = true
+	}
+	if checkValue(blogDetail.Technologies, "reactjs") {
+		blogDetail.Reactjs = true
+	}
+	if checkValue(blogDetail.Technologies, "javascript" ) {
+		blogDetail.Javascript = true
+	}
+	if checkValue(blogDetail.Technologies, "typescript") {
+		blogDetail.Typescript = true
+	}
+
+		data := map[string] interface{}{
+			"id" : id,
+			"ProjectDetail" : blogDetail,
+			"startDate" 	: blogDetail.Start.Format("2006-01-02"),
+			"endDate"		: blogDetail.End.Format("2006-01-02"),
 		}
-	}
-
-	data := map[string] interface{}{
-		"id": id,
-		"forms": blogUpdate,
-	}
+	
 
 	tmpl, err := template.ParseFiles("views/form-update.html")
 
@@ -317,33 +294,43 @@ func FormUpdate(c echo.Context)error{
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	
 	return tmpl.Execute(c. Response(), data)
 }
 
 func updatedBlog(c echo.Context) error{
 	id, _ := strconv.Atoi(c.FormValue("id"))
-	projectName := c.FormValue("project")
-	start := c.FormValue("start")
-	end := c.FormValue("end")
+	project_name := c.FormValue("project")
+	start_date := c.FormValue("start")
+	end_date := c.FormValue("end")
 	description := c.FormValue("description")
 	nodejs := c.FormValue("nodejs")
 	reactjs := c.FormValue("reactjs")
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
-	
-	date1, _ := time.Parse("2006-01-02", start)
-	date2, _ := time.Parse("2006-01-02", end)
 
-	formData[id].ProjectName = projectName
-	formData[id].Start = date1
-	formData[id].End = date2
-	formData[id].Duration = timeDuration(date1, date2 )
-	formData[id].Description = description
-	formData[id].Nodejs = (nodejs == "nodejs")
-	formData[id].Reactjs = (reactjs == "reactjs")
-	formData[id].Javascript = (javascript == "javascript")
-	formData[id].Typescript = (typescript == "typescript")
+	date1, _ := time.Parse("2006-01-02", start_date)
+	date2, _ := time.Parse("2006-01-02", end_date)
+	technologies := []string{nodejs, reactjs, javascript, typescript}
+	
+
+	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5 WHERE id=$6", 
+	project_name, date1, date2, description, technologies, id)
+	
+	fmt.Println("ini update", dataUpdate.RowsAffected())
+
+	if err != nil {
+		fmt.Println("ini error:", err.Error())
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	fmt.Println("project:", project_name)
+	fmt.Println("Startdate:", start_date)
+	fmt.Println("endDate:", end_date)
+	fmt.Println("description:", description)
+	fmt.Println("nodejs:", nodejs)
+	fmt.Println("reactjs:", reactjs)
+	fmt.Println("javascript:", javascript)
+	fmt.Println("typescript:", typescript)
 
 	return  c.Redirect(http.StatusMovedPermanently, "/blog")
 }
@@ -372,9 +359,7 @@ func checkValue(tech []string, obj string) bool {
 		if data == obj {
 			return true
 		}
-
 	}
 	return false
-
 }
 
