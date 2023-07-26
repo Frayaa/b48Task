@@ -63,8 +63,8 @@
       </div>
     </nav>
 
-    <section class="vh-100" style="background-color: #508bfc">
-      <div class="container pt-5 h-100">
+    <section class="vh-110" style="background-color: #508bfc">
+      <div class="container pt-5 h-100 mt-5">
         {{if .flashMessage}} {{if .flashStatus}}
         <div
           class="alert alert-success alert-dismissible fade show"
@@ -138,22 +138,10 @@
                     Register
                   </button>
 
-                  <hr class="my-4" />
-
-                  <button
-                    class="btn btn-lg btn-block btn-primary"
-                    style="background-color: #dd4b39"
-                    type="submit"
-                  >
-                    <i class="fab fa-google me-2"></i> Sign in with google
-                  </button>
-                  <button
-                    class="btn btn-lg btn-block btn-primary mb-2"
-                    style="background-color: #3b5998"
-                    type="submit"
-                  >
-                    <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
-                  </button>
+                  <div class="text-center mt-4">
+                    <p>Already have an account ?</p>
+                    <a href="/login" class="btn-auth">Login</a>
+                  </div>
                 </form>
               </div>
             </div>

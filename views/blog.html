@@ -56,8 +56,26 @@
               <a class="nav-link" href="/testimoni">Testimoni</a>
             </li>
           </ul>
-          <div class="d-flex">
-            <a href="/contact" class="btn-purple">Contact Me</a>
+
+          <div class="row align-items-center mr-5">
+            {{if .UserLogin.IsLogin }}
+            <div class="col-md-8 col-lg-4">
+              <p>Hallo, {{.UserLogin.Name }}</p>
+            </div>
+            <div class="col-md-8 col-lg-4">
+              <form method="POST" action="/logout">
+                <button>Logout</button>
+              </form>
+            </div>
+            <div class="col-md-8 col-lg-4 btn-purple">
+              <a href="contact">Contact Me</a>
+            </div>
+            {{else}}
+            <a href="/login" class="btn-auth">Login</a>
+            <div class="d-flex btn-purple">
+              <a href="/contact" class="btn-purple">Contact Me</a>
+            </div>
+            {{end}}
           </div>
         </div>
       </div>

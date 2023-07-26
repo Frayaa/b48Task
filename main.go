@@ -75,7 +75,7 @@ func main() {
 	e.POST("/add-blog", addBlog)
 	e.POST("/update-blog", updatedBlog)
 	e.POST("/delete/:id", deleteBlog)
-	
+
 	e.GET("/about", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string {
 			"message": "Hello World",
@@ -165,6 +165,7 @@ func blog(c echo.Context) error {
 	data := map[string]interface{}{
 		"forms": formData,
 		"UserLogin": userLoginSession,
+		
 	}
 
 	tmpl, err := template.ParseFiles("views/blog.html")
@@ -525,7 +526,7 @@ func logout(c echo.Context) error {
 	sess.Options.MaxAge = -1
 	sess.Save(c.Request(), c.Response())
 
-	return redirectMessage(c, "Logout Berhasil", true, "/home")
+	return redirectMessage(c, "Logout Berhasil", true, "/login")
 }
 
 
