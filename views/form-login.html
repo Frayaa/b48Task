@@ -71,6 +71,34 @@
         style="background-color: white"
       >
         <div class="container">
+          {{if .FlashMessage}} {{if .FlashStatus}}
+          <div
+            class="alert alert-success alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>{{.FlashMessage}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          {{else}}
+          <div
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>{{.FlashMessage}}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          {{end}} {{end}}
+
           <div class="row gx-lg-5 align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
               <img
@@ -92,7 +120,7 @@
             <div class="col-lg-6 mb-5 mb-lg-0 pt-0 mt-0">
               <div class="card">
                 <div class="card-body py-5 px-md-5">
-                  <form>
+                  <form action="/auth/login" method="post">
                     <!-- 2 column grid layout with text inputs for the first and last names -->
 
                     <!-- Email input -->

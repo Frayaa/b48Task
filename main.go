@@ -9,8 +9,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 
@@ -33,15 +35,15 @@ type User struct {
 	Id int
 	Name string
 	Email string
-	Password string
+	HashedPassword string
 }
 
-type KeepUserLogin struct {
+type UserLoginSession struct {
 	IsLogin bool
 	Name string
 }
 
-var keepUserLogin = KeepUserLogin{}
+var userLoginSession = UserLoginSession{}
 
 var formData = []Form {
 
@@ -51,6 +53,8 @@ func main() {
 	e := echo.New()
 
 	connection.DatabaseConnect()
+
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("loginUser"))))
 
 	e.Static("/assets", "assets")
 
@@ -65,11 +69,13 @@ func main() {
 	e.GET("/register", formRegister)
 	
 
+	e.POST("/logout", logout)
 	e.POST("/auth/login", login)
 	e.POST("/auth/register", register)
 	e.POST("/add-blog", addBlog)
 	e.POST("/update-blog", updatedBlog)
 	e.POST("/delete/:id", deleteBlog)
+	
 	e.GET("/about", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string {
 			"message": "Hello World",
@@ -147,8 +153,18 @@ func blog(c echo.Context) error {
 		formData = append(formData, each)
 	}
 
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = true
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
 	data := map[string]interface{}{
 		"forms": formData,
+		"UserLogin": userLoginSession,
 	}
 
 	tmpl, err := template.ParseFiles("views/blog.html")
@@ -423,9 +439,28 @@ func formRegister(c echo.Context) error {
 }
 
 func register(c echo.Context) error {
-	name := c.
-}
+	name := c.FormValue("input_name")
+	email := c.FormValue("input_email")
+	password := c.FormValue("input_password")
 
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	
+	query, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_user (username, email, password) VALUES ($1, $2, $3)", name, email, hashedPassword)
+	
+	fmt.Println("iniapa:", name, email, hashedPassword)
+	fmt.Println("affected row:", query.RowsAffected())
+
+	if err != nil {
+		return redirectMessage(c, "Register berhasil", false, "/register")
+	}
+
+	return redirectMessage(c, "Register berhasil", true, "/login")
+}
 
 
 // Login
@@ -452,20 +487,46 @@ func formLogin(c echo.Context)error {
 	return tmpl.Execute(c.Response(), flash)
 }
 
-// func login(c echo.Context) error {
-// 	email := c.FormValue("input-email")
-// 	password := c.FormValue("input-password")
+func login(c echo.Context) error {
+	email := c.FormValue("input-email")
+	password := c.FormValue("input-password")
 
-// 	user := User{}
+	user := User{}
 
-// 	err := connection.Conn.QueryRow(context.Background(), "SELECT id, username, email, password FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.HashedPassword)
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, username, email, password FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.HashedPassword)
 
-// 	if err != nil {
-// 		return redirectMessage(c, "Login Failed", false, "/form-login")
-// 	}
+	if err != nil {
+		return redirectMessage(c, "Login Failed", false, "/login")
+	}
 
+	errPassword := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(password))
 
-// }
+	if errPassword != nil {
+		return redirectMessage(c, "Login Gagal", false, "/login")
+	}
+
+	sess, _ := session.Get("session", c)
+	sess.Options.MaxAge = 10800 
+	sess.Values["message"] = "Login Success"
+	sess.Values["status"] = true
+	sess.Values["name"] = user.Name
+	sess.Values["email"] = user.Email
+	sess.Values["id"] = user.Id
+	sess.Values["isLogin"] = true
+	sess.Save(c.Request(), c.Response())
+
+	return c.Redirect(http.StatusMovedPermanently, "/home")
+
+}
+
+// Logout
+func logout(c echo.Context) error {
+	sess, _ := session.Get("session", c)
+	sess.Options.MaxAge = -1
+	sess.Save(c.Request(), c.Response())
+
+	return redirectMessage(c, "Logout Berhasil", true, "/home")
+}
 
 
 
