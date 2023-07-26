@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
 
@@ -28,6 +29,20 @@ type Form struct {
 	Image string
 }
 
+type User struct {
+	Id int
+	Name string
+	Email string
+	Password string
+}
+
+type KeepUserLogin struct {
+	IsLogin bool
+	Name string
+}
+
+var keepUserLogin = KeepUserLogin{}
+
 var formData = []Form {
 
 }
@@ -46,7 +61,12 @@ func main() {
 	e.GET("/blog-detail/:id", blogDetail)
 	e.GET("/testimoni", testimoni)
 	e.GET("/form-update/:id", FormUpdate)
+	e.GET("/login", formLogin)
+	e.GET("/register", formRegister)
 	
+
+	e.POST("/auth/login", login)
+	e.POST("/auth/register", register)
 	e.POST("/add-blog", addBlog)
 	e.POST("/update-blog", updatedBlog)
 	e.POST("/delete/:id", deleteBlog)
@@ -362,4 +382,93 @@ func checkValue(tech []string, obj string) bool {
 	}
 	return false
 }
+
+// redirectmessage
+func redirectMessage(c echo.Context, message string, status bool, redirectPath string) error {
+	sess, errSess := session.Get("session", c)
+
+	if errSess != nil {
+		return c.JSON(http.StatusInternalServerError, errSess.Error())
+	}
+
+	sess.Values["message"] = message
+	sess.Values["status"] = status
+	sess.Save(c.Request(), c.Response())
+	return c.Redirect(http.StatusMovedPermanently, redirectPath)
+} 
+
+// Register 
+func formRegister(c echo.Context) error {
+	tmpl, err := template.ParseFiles("views/form-register.html")
+
+	sess, errSess := session.Get("session", c)
+	if errSess != nil {
+		return c.JSON(http.StatusInternalServerError, errSess.Error())
+	}
+
+	flash := map[string]interface{}{
+		"flashMessage": sess.Values["message"],
+		"flashStatus" : sess.Values["status"],
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return tmpl.Execute(c.Response(), flash)
+}
+
+func register(c echo.Context) error {
+	name := c.
+}
+
+
+
+// Login
+func formLogin(c echo.Context)error {
+	tmpl, err := template.ParseFiles("views/form-login.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	sess, errSess := session.Get("session", c)
+	if errSess != nil {
+		return c.JSON(http.StatusInternalServerError, errSess.Error())
+	}
+
+	flash := map[string]interface{}{
+		"flashMessage": sess.Values["message"],
+		"flashStatus" : sess.Values["status"],
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	return tmpl.Execute(c.Response(), flash)
+}
+
+// func login(c echo.Context) error {
+// 	email := c.FormValue("input-email")
+// 	password := c.FormValue("input-password")
+
+// 	user := User{}
+
+// 	err := connection.Conn.QueryRow(context.Background(), "SELECT id, username, email, password FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.HashedPassword)
+
+// 	if err != nil {
+// 		return redirectMessage(c, "Login Failed", false, "/form-login")
+// 	}
+
+
+// }
+
+
+
+
+
 
