@@ -93,7 +93,21 @@ func home(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = true
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
+	data := map[string]interface{}{
+		"UserLogin": userLoginSession,
+		
+	}
+
+	return tmpl.Execute(c.Response(), data)
 }
 
 func contact(c echo.Context) error {
@@ -472,6 +486,11 @@ func formLogin(c echo.Context)error {
 	}
 
 	sess, errSess := session.Get("session", c)
+
+	if sess.Values["isLogin"] == true {
+		return c.Redirect(http.StatusMovedPermanently, "/home")
+	} 
+
 	if errSess != nil {
 		return c.JSON(http.StatusInternalServerError, errSess.Error())
 	}
@@ -507,6 +526,7 @@ func login(c echo.Context) error {
 	}
 
 	sess, _ := session.Get("session", c)
+
 	sess.Options.MaxAge = 10800 
 	sess.Values["message"] = "Login Success"
 	sess.Values["status"] = true
@@ -514,7 +534,10 @@ func login(c echo.Context) error {
 	sess.Values["email"] = user.Email
 	sess.Values["id"] = user.Id
 	sess.Values["isLogin"] = true
-	sess.Save(c.Request(), c.Response())
+	sess.Save(c.Request(), c.Response()) 
+	
+	
+	
 
 	return c.Redirect(http.StatusMovedPermanently, "/home")
 

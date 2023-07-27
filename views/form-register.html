@@ -63,7 +63,7 @@
       </div>
     </nav>
 
-    <section class="vh-110" style="background-color: #508bfc">
+    <section class="vh-110">
       <div class="container pt-5 h-100 mt-5">
         {{if .flashMessage}} {{if .flashStatus}}
         <div
@@ -94,8 +94,12 @@
         {{end}} {{end}}
 
         <div
-          class="row d-flex justify-content-center align-items-center h-100 pt-5 mt-2"
+          class="row d-flex flex-row justify-content-center align-items-center pt-2 mt-2"
+          style="background-color: rgb(179, 123, 204); height: 87.3vh"
         >
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <img src="/assets/images/registrasi.png" />
+          </div>
           <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card shadow-2-strong" style="border-radius: 1rem">
               <div class="card-body p-5 text-center">
@@ -108,6 +112,7 @@
                       id="username"
                       class="form-control form-control-lg"
                       name="input_name"
+                      required
                     />
                   </div>
 
@@ -118,6 +123,7 @@
                       id="email"
                       class="form-control form-control-lg"
                       name="input_email"
+                      required
                     />
                   </div>
 
@@ -128,19 +134,26 @@
                       id="password"
                       class="form-control form-control-lg"
                       name="input_password"
+                      required
                     />
                   </div>
 
                   <button
-                    class="btn btn-primary btn-lg btn-block"
+                    class="btn text-white"
                     type="submit"
+                    style="background-color: rgb(179, 123, 204)"
                   >
                     Register
                   </button>
 
                   <div class="text-center mt-4">
                     <p>Already have an account ?</p>
-                    <a href="/login" class="btn-auth">Login</a>
+                    <a
+                      href="/login"
+                      class="btn-auth"
+                      style="text-decoration: none; color: rgb(179, 123, 204)"
+                      >Login</a
+                    >
                   </div>
                 </form>
               </div>
