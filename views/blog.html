@@ -113,7 +113,8 @@
         class="container d-flex flex-row flex-wrap gap-4 justify-content-center"
         style="height: 20px"
       >
-        {{ range $index, $form := .forms }}
+        {{ range $index, $form := .forms }} {{if $form.LoginName}}
+
         <div class="card" style="width: 18rem">
           <img
             src="/assets/images/{{ $form.Image}}"
@@ -126,6 +127,7 @@
                 {{ $form.ProjectName }}
               </h3>
             </a>
+            <p class="card-text">{{ $form.Author }}</p>
             <p class="card-text">{{ $form.Duration }}</p>
             <p class="card-text">{{ $form.Description }}</p>
             <div class="icon-project">
@@ -146,6 +148,7 @@
                 </div>
               </div>
             </div>
+
             {{if $.UserLogin.IsLogin }}
             <div class="d-flex flex-row flex-wrap gap-2 justify-content-center">
               <form action="/form-update/{{$form.Id}}" method="GET">
@@ -163,10 +166,71 @@
                 </button>
               </form>
             </div>
+            {{else}}
+            <div style="display: none"></div>
             {{end}}
           </div>
         </div>
-        {{end}}
+        {{else}} {{if $.DataSession.NotLogin}}
+        <div class="card" style="width: 18rem">
+          <img
+            src="/assets/images/{{ $form.Image}}"
+            class="card-img-top"
+            id="images"
+          />
+          <div class="card-body">
+            <a href="/blog-detail/{{$form.Id}}">
+              <h3 class="card-title text-left col-8 text-truncate">
+                {{ $form.ProjectName }}
+              </h3>
+            </a>
+            <p class="card-text">{{ $form.Author }}</p>
+            <p class="card-text">{{ $form.Duration }}</p>
+            <p class="card-text">{{ $form.Description }}</p>
+            <div class="icon-project">
+              <div class="row row-cols-auto">
+                <div class="col">
+                  {{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Javascript }}<i class="bx bxl-javascript"></i
+                  >{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  {{end}}
+                </div>
+              </div>
+            </div>
+
+            {{if $.UserLogin.IsLogin }}
+            <div class="d-flex flex-row flex-wrap gap-2 justify-content-center">
+              <form action="/form-update/{{$form.Id}}" method="GET">
+                <button type="submit" class="btn-blue">Edit</button>
+              </form>
+
+              <form action="/delete/{{$form.Id}}" method="post">
+                <button
+                  type="submit"
+                  class="btn-blue close"
+                  confirm="Are you sure want to Delete?"
+                  Onclick="return ConfirmDelete();"
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
+            {{else}}
+            <div style="display: none"></div>
+            {{end}}
+          </div>
+        </div>
+        {{else}}
+        <div style="display: none"></div>
+        {{end}} {{end}} {{end}}
       </div>
     </div>
 

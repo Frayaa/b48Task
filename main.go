@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"html/template"
 	"myapp/connection"
@@ -29,6 +30,9 @@ type Form struct {
 	Javascript bool
 	Typescript bool
 	Image string
+	UserId int
+	Author string
+	LoginName bool
 }
 
 type User struct {
@@ -41,6 +45,7 @@ type User struct {
 type UserLoginSession struct {
 	IsLogin bool
 	Name string
+	NotLogin bool
 }
 
 var userLoginSession = UserLoginSession{}
@@ -131,18 +136,28 @@ func formBlog(c echo.Context) error {
 }
 
 func blog(c echo.Context) error {
+
+	sess, _ := session.Get("session", c)
 	
-	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT tb_project.id, tb_user_username, tb_project_project_name, tb_project_start_date, tb_project_end_date, tb_project_description, project_name, start_date, end_date, description, technologies, image FROM tb_project")
+	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_user.username AS user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id")
 
 	if errData != nil {
 		return c.JSON(http.StatusInternalServerError, errData.Error())
+	}
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.NotLogin = true
+	} else {
+		userLoginSession.NotLogin = false
 	}
 
 	formData = []Form{}
 	for dataQuery.Next() {
 		var each = Form{}
 
-		err := dataQuery.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image)
+		var tempAuthor sql.NullString
+
+		err := dataQuery.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image, &tempAuthor)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, err.Error())
@@ -164,10 +179,20 @@ func blog(c echo.Context) error {
 			each.Typescript = true
 		}
 
-		formData = append(formData, each)
+		fmt.Println("ini datamu bos : ", tempAuthor.String)
+
+		each.Author = tempAuthor.String
+
+		
+		if sess.Values["name"] == each.Author {
+			each.LoginName = true
+			} else {
+				each.LoginName = false
+			}
+			formData = append(formData, each)
 	}
 
-	sess, _ := session.Get("session", c)
+	// sess, _ := session.Get("session", c)
 
 	if sess.Values["isLogin"] != true {
 		userLoginSession.IsLogin = false
@@ -178,6 +203,7 @@ func blog(c echo.Context) error {
 
 	data := map[string]interface{}{
 		"forms": formData,
+		"DataSession": userLoginSession,
 		"UserLogin": userLoginSession,
 		
 	}
@@ -192,6 +218,8 @@ func blog(c echo.Context) error {
 }
 
 func addBlog(c echo.Context) error {
+	sess, _ := session.Get("session", c)
+
 	project_name := c.FormValue("project")
 	start_date := c.FormValue("start")
 	end_date := c.FormValue("end")
@@ -200,7 +228,8 @@ func addBlog(c echo.Context) error {
 	reactjs := c.FormValue("reactjs")
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
-	image := c.FormValue("image")
+	// image := c.FormValue("image")
+	user_id := sess.Values["id"]
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
@@ -208,8 +237,8 @@ func addBlog(c echo.Context) error {
 	technologies := []string{nodejs, reactjs, javascript, typescript}
 
 
-	add, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (project_name, start_date, end_date, description, technologies, image) VALUES ($1, $2, $3, $4, $5, $6)",
-	project_name, date1, date2, description, technologies, "project.jpeg")
+	add, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (project_name, start_date, end_date, description, technologies, image, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+	project_name, date1, date2, description, technologies, "project.jpeg", user_id)
 
 	fmt.Println("rowaffected:", add.RowsAffected())
 
@@ -226,7 +255,7 @@ func addBlog(c echo.Context) error {
 	fmt.Println("reactjs:", reactjs)
 	fmt.Println("javascript:", javascript)
 	fmt.Println("typescript:", typescript)
-	fmt.Println("image:", image)
+	// fmt.Println("image:", image)
 
 	return  c.Redirect(http.StatusMovedPermanently, "/blog")
 }
@@ -240,10 +269,19 @@ func blogDetail(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = sess.Values["isLogin"].(bool)
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
 	blogDetail := Form{}
 
-	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
-	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image)
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_project.user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id WHERE tb_user.id=$1;", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image, &blogDetail.Author)
 
 	fmt.Println("data query:", errQuery)
 	
@@ -269,6 +307,7 @@ func blogDetail(c echo.Context) error {
 		data := map[string] interface{}{
 			"id" : id,
 			"ProjectDetail" : blogDetail,
+			"DataSession" : userLoginSession,
 			"startDate" 	: blogDetail.Start.Format("2006-01-02"),
 			"endDate"		: blogDetail.End.Format("2006-01-02"),
 		}
@@ -331,11 +370,21 @@ func FormUpdate(c echo.Context)error{
 		blogDetail.Typescript = true
 	}
 
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = sess.Values["isLogin"].(bool)
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
 		data := map[string] interface{}{
 			"id" : id,
 			"ProjectDetail" : blogDetail,
 			"startDate" 	: blogDetail.Start.Format("2006-01-02"),
 			"endDate"		: blogDetail.End.Format("2006-01-02"),
+			"DataSession" : userLoginSession,
 		}
 	
 
@@ -349,6 +398,7 @@ func FormUpdate(c echo.Context)error{
 }
 
 func updatedBlog(c echo.Context) error{
+	sess, _ := session.Get("session", c)
 	id, _ := strconv.Atoi(c.FormValue("id"))
 	project_name := c.FormValue("project")
 	start_date := c.FormValue("start")
@@ -358,14 +408,15 @@ func updatedBlog(c echo.Context) error{
 	reactjs := c.FormValue("reactjs")
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
+	user_id := sess.Values["id"]
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
 	technologies := []string{nodejs, reactjs, javascript, typescript}
 	
 
-	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5 WHERE id=$6", 
-	project_name, date1, date2, description, technologies, id)
+	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, user_id=$6 WHERE id=$7", 
+	project_name, date1, date2, description, technologies, user_id, id)
 	
 	fmt.Println("ini update", dataUpdate.RowsAffected())
 
