@@ -132,7 +132,7 @@ func formBlog(c echo.Context) error {
 
 func blog(c echo.Context) error {
 	
-	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project")
+	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT tb_project.id, tb_user_username, tb_project_project_name, tb_project_start_date, tb_project_end_date, tb_project_description, project_name, start_date, end_date, description, technologies, image FROM tb_project")
 
 	if errData != nil {
 		return c.JSON(http.StatusInternalServerError, errData.Error())
