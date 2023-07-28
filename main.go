@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"myapp/connection"
+	"myapp/middleware"
 	"net/http"
 	"strconv"
 	"time"
@@ -62,6 +63,7 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("loginUser"))))
 
 	e.Static("/assets", "assets")
+	e.Static("/uploads", "uploads")
 
 	e.GET("/home", home)
 	e.GET("/contact", contact)
@@ -77,7 +79,7 @@ func main() {
 	e.POST("/logout", logout)
 	e.POST("/auth/login", login)
 	e.POST("/auth/register", register)
-	e.POST("/add-blog", addBlog)
+	e.POST("/add-blog", middleware.UploadFile(addBlog))
 	e.POST("/update-blog", updatedBlog)
 	e.POST("/delete/:id", deleteBlog)
 
@@ -179,7 +181,7 @@ func blog(c echo.Context) error {
 			each.Typescript = true
 		}
 
-		fmt.Println("ini datamu bos : ", tempAuthor.String)
+		fmt.Println("ini datanya: ", tempAuthor.String)
 
 		each.Author = tempAuthor.String
 
@@ -228,7 +230,7 @@ func addBlog(c echo.Context) error {
 	reactjs := c.FormValue("reactjs")
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
-	// image := c.FormValue("image")
+	image := c.Get("dataFile").(string)
 	user_id := sess.Values["id"]
 
 	date1, _ := time.Parse("2006-01-02", start_date)
@@ -238,7 +240,7 @@ func addBlog(c echo.Context) error {
 
 
 	add, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_project (project_name, start_date, end_date, description, technologies, image, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-	project_name, date1, date2, description, technologies, "project.jpeg", user_id)
+	project_name, date1, date2, description, technologies, image, user_id)
 
 	fmt.Println("rowaffected:", add.RowsAffected())
 
@@ -280,7 +282,7 @@ func blogDetail(c echo.Context) error {
 
 	blogDetail := Form{}
 
-	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_project.user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id WHERE tb_user.id=$1;", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_project.user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id WHERE tb_project.id=$1;", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
 	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image, &blogDetail.Author)
 
 	fmt.Println("data query:", errQuery)

@@ -11,7 +11,7 @@ import (
 
 func UploadFile(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		file, err := c.FormFile("input-image")
+		file, err := c.FormFile("image")
 
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err.Error())
@@ -52,7 +52,7 @@ func UploadFile(next echo.HandlerFunc) echo.HandlerFunc {
 
 		fmt.Println("filename kepotong:", filename)
 
-		c.Set("datafile:", filename)
+		c.Set("dataFile", filename)
 
 		return next(c)
 

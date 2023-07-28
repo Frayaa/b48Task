@@ -117,17 +117,17 @@
 
         <div class="card" style="width: 18rem">
           <img
-            src="/assets/images/{{ $form.Image}}"
+            src="/uploads/{{$form.Image}}"
             class="card-img-top"
             id="images"
           />
           <div class="card-body">
-            <a href="/blog-detail/{{$form.Id}}">
+            <a href="/blog-detail/{{ $form.Id }}" class="text-decoration-none">
               <h3 class="card-title text-left col-8 text-truncate">
                 {{ $form.ProjectName }}
               </h3>
             </a>
-            <p class="card-text">{{ $form.Author }}</p>
+            <p class="card-text">By: {{ $form.Author }}</p>
             <p class="card-text">{{ $form.Duration }}</p>
             <p class="card-text">{{ $form.Description }}</p>
             <div class="icon-project">
@@ -174,7 +174,7 @@
         {{else}} {{if $.DataSession.NotLogin}}
         <div class="card" style="width: 18rem">
           <img
-            src="/assets/images/{{ $form.Image}}"
+            src="/uploads/{{$form.Image}}"
             class="card-img-top"
             id="images"
           />
@@ -184,7 +184,7 @@
                 {{ $form.ProjectName }}
               </h3>
             </a>
-            <p class="card-text">{{ $form.Author }}</p>
+            <p class="card-text">By: {{ $form.Author }}</p>
             <p class="card-text">{{ $form.Duration }}</p>
             <p class="card-text">{{ $form.Description }}</p>
             <div class="icon-project">
