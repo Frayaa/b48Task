@@ -348,8 +348,8 @@ func FormUpdate(c echo.Context)error{
 
 	blogDetail := Form{}
 
-	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
-	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image)
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image, user_id FROM tb_project WHERE id=$1", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image, &blogDetail.Author)
 
 	fmt.Println("data query:", errQuery)
 	
@@ -386,7 +386,7 @@ func FormUpdate(c echo.Context)error{
 			"ProjectDetail" : blogDetail,
 			"startDate" 	: blogDetail.Start.Format("2006-01-02"),
 			"endDate"		: blogDetail.End.Format("2006-01-02"),
-			"DataSession" : userLoginSession,
+			"DataSession"   : userLoginSession,
 		}
 	
 
@@ -401,6 +401,7 @@ func FormUpdate(c echo.Context)error{
 
 func updatedBlog(c echo.Context) error{
 	sess, _ := session.Get("session", c)
+
 	id, _ := strconv.Atoi(c.FormValue("id"))
 	project_name := c.FormValue("project")
 	start_date := c.FormValue("start")
@@ -411,14 +412,15 @@ func updatedBlog(c echo.Context) error{
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
 	user_id := sess.Values["id"]
+	image := c.Get("dataFile").(string)
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
 	technologies := []string{nodejs, reactjs, javascript, typescript}
 	
 
-	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, user_id=$6 WHERE id=$7", 
-	project_name, date1, date2, description, technologies, user_id, id)
+	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, image=$6, user_id=$7 WHERE id=$8",
+	project_name, date1, date2, description, technologies, image, user_id, id)
 	
 	fmt.Println("ini update", dataUpdate.RowsAffected())
 
