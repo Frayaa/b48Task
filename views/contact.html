@@ -59,9 +59,9 @@
           </ul>
 
           <div class="row align-items-center" style="margin-right: 20px">
-            {{if .UserLogin.IsLogin }}
+            {{if .DataSession.IsLogin }}
             <div class="col-md-8 col-lg-4 mt-3">
-              <p class="fs-5 text-wrap">Hallo, {{.UserLogin.Name }}</p>
+              <p class="fs-5 text-wrap">Hallo, {{.DataSession.Name }}</p>
             </div>
             <div class="col-md-8 col-lg-4">
               <form method="POST" action="/logout">

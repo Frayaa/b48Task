@@ -124,7 +124,20 @@ func contact(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = sess.Values["isLogin"].(bool)
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
+	data := map[string] interface{}{
+		"DataSession" : userLoginSession,
+	}
+
+	return tmpl.Execute(c.Response(), data)
 }
 
 func formBlog(c echo.Context) error {
@@ -134,7 +147,20 @@ func formBlog(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = sess.Values["isLogin"].(bool)
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
+	data := map[string] interface{}{
+		"DataSession" : userLoginSession,
+	}
+
+	return tmpl.Execute(c.Response(), data)
 }
 
 func blog(c echo.Context) error {
@@ -320,11 +346,27 @@ func blogDetail(c echo.Context) error {
 func testimoni(c echo.Context) error {
 	tmpl, err := template.ParseFiles("views/testimoni.html")
 
+	
+
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.IsLogin = false
+	} else {
+		userLoginSession.IsLogin = sess.Values["isLogin"].(bool)
+		userLoginSession.Name = sess.Values["name"].(string)
+	}
+
+	data := map[string] interface{}{
+		"DataSession" : userLoginSession,
+	}
+
+
+	return tmpl.Execute(c.Response(), data)
 }
 
 // delete
@@ -400,7 +442,7 @@ func FormUpdate(c echo.Context)error{
 }
 
 func updatedBlog(c echo.Context) error{
-	sess, _ := session.Get("session", c)
+	// sess, _ := session.Get("session", c)
 
 	id, _ := strconv.Atoi(c.FormValue("id"))
 	project_name := c.FormValue("project")
@@ -411,22 +453,22 @@ func updatedBlog(c echo.Context) error{
 	reactjs := c.FormValue("reactjs")
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
-	user_id := sess.Values["id"]
 	image := c.Get("dataFile").(string)
+	// user_id := sess.Values["id"]
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
 	technologies := []string{nodejs, reactjs, javascript, typescript}
 	
 
-	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, image=$6, user_id=$7 WHERE id=$8",
-	project_name, date1, date2, description, technologies, image, user_id, id)
+	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, image=$6, WHERE id=$7",
+	project_name, date1, date2, description, technologies, image, id)
 	
 	fmt.Println("ini update", dataUpdate.RowsAffected())
 
 	if err != nil {
 		fmt.Println("ini error:", err.Error())
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
 	fmt.Println("project:", project_name)
