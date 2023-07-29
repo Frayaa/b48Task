@@ -80,7 +80,7 @@ func main() {
 	e.POST("/auth/login", login)
 	e.POST("/auth/register", register)
 	e.POST("/add-blog", middleware.UploadFile(addBlog))
-	e.POST("/update-blog", updatedBlog)
+	e.POST("/update-blog", middleware.UploadFile(updatedBlog))
 	e.POST("/delete/:id", deleteBlog)
 
 	e.GET("/about", func(c echo.Context) error {
@@ -423,6 +423,8 @@ func FormUpdate(c echo.Context)error{
 		userLoginSession.Name = sess.Values["name"].(string)
 	}
 
+	
+
 		data := map[string] interface{}{
 			"id" : id,
 			"ProjectDetail" : blogDetail,
@@ -442,7 +444,7 @@ func FormUpdate(c echo.Context)error{
 }
 
 func updatedBlog(c echo.Context) error{
-	// sess, _ := session.Get("session", c)
+	sess, _ := session.Get("session", c)
 
 	id, _ := strconv.Atoi(c.FormValue("id"))
 	project_name := c.FormValue("project")
@@ -454,22 +456,22 @@ func updatedBlog(c echo.Context) error{
 	javascript := c.FormValue("javascript")
 	typescript := c.FormValue("typescript")
 	image := c.Get("dataFile").(string)
-	// user_id := sess.Values["id"]
+	user_id := sess.Values["id"]
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
 	technologies := []string{nodejs, reactjs, javascript, typescript}
-	
 
-	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, image=$6, WHERE id=$7",
-	project_name, date1, date2, description, technologies, image, id)
+
+	dataUpdate, err := connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name=$1, start_date=$2, end_date=$3, description=$4, technologies=$5, image=$6, user_id=$7 WHERE id=$8",
+	project_name, date1, date2, description, technologies, image, user_id, id)
 	
 	fmt.Println("ini update", dataUpdate.RowsAffected())
 
 	if err != nil {
-		fmt.Println("ini error:", err.Error())
-		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
-	}
+        fmt.Println("ini error:", err.Error())
+        return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+    }
 
 	fmt.Println("project:", project_name)
 	fmt.Println("Startdate:", start_date)
