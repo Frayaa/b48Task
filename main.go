@@ -103,6 +103,62 @@ func home(c echo.Context) error {
 
 	sess, _ := session.Get("session", c)
 
+	
+	dataQuery, errData := connection.Conn.Query(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_user.username AS user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id")
+
+	if errData != nil {
+		return c.JSON(http.StatusInternalServerError, errData.Error())
+	}
+
+	if sess.Values["isLogin"] != true {
+		userLoginSession.NotLogin = true
+	} else {
+		userLoginSession.NotLogin = false
+	}
+
+	formData = []Form{}
+	for dataQuery.Next() {
+		var each = Form{}
+
+		var tempAuthor sql.NullString
+
+		err := dataQuery.Scan(&each.Id, &each.ProjectName, &each.Start, &each.End, &each.Description, &each.Technologies, &each.Image, &tempAuthor)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, err.Error())
+
+		}
+
+		each.Duration = timeDuration(each.Start, each.End )
+
+		if checkValue(each.Technologies, "nodejs") {
+			each.Nodejs = true
+		}
+		if checkValue(each.Technologies, "reactjs") {
+			each.Reactjs = true
+		}
+		if checkValue(each.Technologies, "javascript" ) {
+			each.Javascript = true
+		}
+		if checkValue(each.Technologies, "typescript") {
+			each.Typescript = true
+		}
+
+		fmt.Println("ini datanya: ", tempAuthor.String)
+
+		each.Author = tempAuthor.String
+
+		
+		if sess.Values["name"] == each.Author {
+			each.LoginName = true
+			} else {
+				each.LoginName = false
+			}
+			formData = append(formData, each)
+	}
+
+	// sess, _ := session.Get("session", c)
+
 	if sess.Values["isLogin"] != true {
 		userLoginSession.IsLogin = false
 	} else {
@@ -111,9 +167,26 @@ func home(c echo.Context) error {
 	}
 
 	data := map[string]interface{}{
+		"forms": formData,
+		"DataSession": userLoginSession,
 		"UserLogin": userLoginSession,
+		"flashMessage": sess.Values["message"],
+		"flashStatus" : sess.Values["status"],
 		
 	}
+
+
+	
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+
+	// return tmpl.Execute(c.Response(), flash)
+
 
 	return tmpl.Execute(c.Response(), data)
 }
@@ -559,15 +632,15 @@ func register(c echo.Context) error {
 	name := c.FormValue("input_name")
 	email := c.FormValue("input_email")
 	password := c.FormValue("input_password")
-
+	
 	user := User{}
-
-	err := connection.Conn.QueryRow(context.Background(), "SELECT id, username, email, password FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.HashedPassword)
-
+	
+	err := connection.Conn.QueryRow(context.Background(), "SELECT email FROM tb_user WHERE email=$1", email).Scan( &user.Email)
+	
+	
 	if err == nil {
 		return redirectMessage(c, "Email Already use", false, "/register")
 	}
-
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 
 	if err != nil {

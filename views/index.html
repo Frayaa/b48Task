@@ -21,6 +21,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/form-blog.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -96,8 +97,35 @@
       </div>
     </nav>
 
-    <section class="bgimage" id="home">
+    <section class="bgimage pt-5 mt-5" id="home">
       <div class="container-md">
+        {{if .flashMessage}} {{if .flashStatus}}
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>{{.flashMessage}}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {{else}}
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>{{.flashMessage}}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {{end}} {{end}}
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
             <h1 class="hero_title">Hi, it's me Fraya</h1>
@@ -201,6 +229,93 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt-5 pt-5">
+      <!-- Blog Detail -->
+      <h1 class="text-center pt-5 pb-5">My Project</h1>
+
+      <div
+        class="container d-flex flex-row flex-wrap gap-4 justify-content-center"
+        style="height: 20px"
+      >
+        {{ range $index, $form := .forms }} {{if $form.LoginName}}
+
+        <div class="card" style="width: 18rem">
+          <img
+            src="/uploads/{{$form.Image}}"
+            class="card-img-top"
+            id="images"
+          />
+          <div class="card-body">
+            <a href="/blog-detail/{{ $form.Id }}" class="text-decoration-none">
+              <h3 class="card-title text-left col-8 text-truncate">
+                {{ $form.ProjectName }}
+              </h3>
+            </a>
+            <p class="card-text">By: {{ $form.Author }}</p>
+            <p class="card-text">{{ $form.Duration }}</p>
+            <p class="card-text">{{ $form.Description }}</p>
+            <div class="icon-project">
+              <div class="row row-cols-auto">
+                <div class="col">
+                  {{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Javascript }}<i class="bx bxl-javascript"></i
+                  >{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  {{end}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{else}} {{if $.DataSession.NotLogin}}
+        <div class="card" style="width: 18rem">
+          <img
+            src="/uploads/{{$form.Image}}"
+            class="card-img-top"
+            id="images"
+          />
+          <div class="card-body">
+            <a href="/blog-detail/{{$form.Id}}">
+              <h3 class="card-title text-left col-8 text-truncate">
+                {{ $form.ProjectName }}
+              </h3>
+            </a>
+            <p class="card-text">By: {{ $form.Author }}</p>
+            <p class="card-text">{{ $form.Duration }}</p>
+            <p class="card-text">{{ $form.Description }}</p>
+            <div class="icon-project">
+              <div class="row row-cols-auto">
+                <div class="col">
+                  {{ if $form.Nodejs }}<i class="bx bxl-nodejs"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Reactjs }} <i class="bx bxl-react"></i>{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Javascript }}<i class="bx bxl-javascript"></i
+                  >{{end}}
+                </div>
+                <div class="col">
+                  {{ if $form.Typescript }}<i class="bx bxl-typescript"></i>
+                  {{end}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{else}}
+        <div style="display: none"></div>
+        {{end}} {{end}} {{end}}
       </div>
     </div>
 

@@ -64,41 +64,34 @@
     </nav>
 
     <!-- Section: Design Block -->
-    <section class="pt-5">
+    <section class="pt-5 mt-5">
+      {{if .flashMessage}} {{if .flashStatus}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{.flashMessage}}</strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {{else}}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{.flashMessage}}</strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {{end}} {{end}}
       <!-- Jumbotron -->
       <div
         class="px-4 py-5 text-center text-lg-start"
         style="background-color: white"
       >
         <div class="container">
-          {{if .flashMessage}} {{if .flashStatus}}
-          <div
-            class="alert alert-success alert-dismissible fade show"
-            role="alert"
-          >
-            <strong>{{.flashMessage}}</strong>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
-          {{else}}
-          <div
-            class="alert alert-danger alert-dismissible fade show"
-            role="alert"
-          >
-            <strong>{{.flashMessage}}</strong>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
-          {{end}} {{end}}
-
           <div
             class="row align-items-center"
             style="background-color: rgb(179, 123, 204); height: 80vh"
