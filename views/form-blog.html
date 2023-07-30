@@ -136,6 +136,7 @@
                   class="form-control form-control-lg"
                   name="start"
                   required
+                  onchange="validateDate()"
                 />
               </div>
               <div class="">
@@ -146,6 +147,7 @@
                   class="form-control form-control-lg"
                   name="end"
                   required
+                  onchange="validateDate()"
                 />
               </div>
             </div>
@@ -236,5 +238,16 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function validateDate() {
+        var startDate = document.getElementById("input-start").value
+        var endDate = document.getElementById("input-end").value
+
+        if (endDate < startDate) {
+          alert("Tanggal akhir tidak dapat sebelum tanggal awal.")
+          document.getElementById("input-end").value = startDate // Atur tanggal akhir kembali ke tanggal awal
+        }
+      }
+    </script>
   </body>
 </html>

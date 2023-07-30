@@ -3,8 +3,8 @@ package middleware
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
-	"os"
 
 	"github.com/labstack/echo/v4"
 )
@@ -27,7 +27,7 @@ func UploadFile(next echo.HandlerFunc) echo.HandlerFunc {
 
 		defer src.Close()
 
-		tempFile, err := os.CreateTemp("uploads", "image-*.png")
+		tempFile, err := ioutil.TempFile("uploads", "image-*.png")
 
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, err.Error())

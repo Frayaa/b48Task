@@ -64,6 +64,7 @@ func main() {
 
 	e.Static("/assets", "assets")
 	e.Static("/uploads", "uploads")
+	
 
 	e.GET("/home", home)
 	e.GET("/contact", contact)
@@ -457,6 +458,8 @@ func updatedBlog(c echo.Context) error{
 	typescript := c.FormValue("typescript")
 	image := c.Get("dataFile").(string)
 	user_id := sess.Values["id"]
+	
+
 
 	date1, _ := time.Parse("2006-01-02", start_date)
 	date2, _ := time.Parse("2006-01-02", end_date)
