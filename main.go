@@ -560,12 +560,19 @@ func register(c echo.Context) error {
 	email := c.FormValue("input_email")
 	password := c.FormValue("input_password")
 
+	user := User{}
+
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, username, email, password FROM tb_user WHERE email=$1", email).Scan(&user.Id, &user.Name, &user.Email, &user.HashedPassword)
+
+	if err == nil {
+		return redirectMessage(c, "Email Already use", false, "/register")
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-
 	
 	query, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_user (username, email, password) VALUES ($1, $2, $3)", name, email, hashedPassword)
 	
@@ -638,7 +645,7 @@ func login(c echo.Context) error {
 	sess.Values["isLogin"] = true
 	sess.Save(c.Request(), c.Response()) 
 
-	return c.Redirect(http.StatusMovedPermanently, "/home")
+	return redirectMessage(c, "Login Succes", true, "/home")
 
 }
 
