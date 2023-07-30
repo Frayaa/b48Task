@@ -168,7 +168,6 @@ func home(c echo.Context) error {
 
 	data := map[string]interface{}{
 		"forms": formData,
-		"DataSession": userLoginSession,
 		"UserLogin": userLoginSession,
 		"flashMessage": sess.Values["message"],
 		"flashStatus" : sess.Values["status"],
@@ -294,7 +293,6 @@ func blog(c echo.Context) error {
 			formData = append(formData, each)
 	}
 
-	// sess, _ := session.Get("session", c)
 
 	if sess.Values["isLogin"] != true {
 		userLoginSession.IsLogin = false
@@ -305,7 +303,6 @@ func blog(c echo.Context) error {
 
 	data := map[string]interface{}{
 		"forms": formData,
-		"DataSession": userLoginSession,
 		"UserLogin": userLoginSession,
 		
 	}
