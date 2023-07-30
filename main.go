@@ -637,9 +637,6 @@ func login(c echo.Context) error {
 	sess.Values["id"] = user.Id
 	sess.Values["isLogin"] = true
 	sess.Save(c.Request(), c.Response()) 
-	
-	
-	
 
 	return c.Redirect(http.StatusMovedPermanently, "/home")
 
@@ -651,6 +648,7 @@ func logout(c echo.Context) error {
 	sess.Options.MaxAge = -1
 	sess.Save(c.Request(), c.Response())
 
+	
 	return redirectMessage(c, "Logout Berhasil", true, "/login")
 }
 
