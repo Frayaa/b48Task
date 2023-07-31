@@ -379,7 +379,7 @@ func blogDetail(c echo.Context) error {
 
 	blogDetail := Form{}
 
-	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_project.user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id WHERE tb_project.id=$1;", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
+	errQuery := connection.Conn.QueryRow(context.Background(), "SELECT tb_project.id, tb_project.project_name, tb_project.start_date, tb_project.end_date, tb_project.description, tb_project.technologies, tb_project.image , tb_user.username AS user_id FROM tb_project LEFT JOIN tb_user ON tb_project.user_id = tb_user.id WHERE tb_project.id=$1;", id).Scan(&blogDetail.Id, &blogDetail.ProjectName,
 	&blogDetail.Start, &blogDetail.End, &blogDetail.Description, &blogDetail.Technologies, &blogDetail.Image, &blogDetail.Author)
 
 	fmt.Println("data query:", errQuery)
@@ -707,6 +707,7 @@ func login(c echo.Context) error {
 	sess, _ := session.Get("session", c)
 
 	sess.Options.MaxAge = 10800 
+
 	sess.Values["message"] = "Login Success"
 	sess.Values["status"] = true
 	sess.Values["name"] = user.Name
